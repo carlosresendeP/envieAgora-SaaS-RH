@@ -63,6 +63,7 @@ export type ApplicationCountAggregateOutputType = {
   status: number
   feedbackIA: number
   matchScore: number
+  matchResultJson: number
   jobId: number
   candidateId: number
   companyId: number
@@ -109,6 +110,7 @@ export type ApplicationCountAggregateInputType = {
   status?: true
   feedbackIA?: true
   matchScore?: true
+  matchResultJson?: true
   jobId?: true
   candidateId?: true
   companyId?: true
@@ -208,6 +210,7 @@ export type ApplicationGroupByOutputType = {
   status: $Enums.ApplicationStatus
   feedbackIA: string | null
   matchScore: number | null
+  matchResultJson: runtime.JsonValue | null
   jobId: string
   candidateId: string
   companyId: string
@@ -243,6 +246,7 @@ export type ApplicationWhereInput = {
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   feedbackIA?: Prisma.StringNullableFilter<"Application"> | string | null
   matchScore?: Prisma.IntNullableFilter<"Application"> | number | null
+  matchResultJson?: Prisma.JsonNullableFilter<"Application">
   jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
   companyId?: Prisma.StringFilter<"Application"> | string
@@ -259,6 +263,7 @@ export type ApplicationOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   feedbackIA?: Prisma.SortOrderInput | Prisma.SortOrder
   matchScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  matchResultJson?: Prisma.SortOrderInput | Prisma.SortOrder
   jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -278,6 +283,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   feedbackIA?: Prisma.StringNullableFilter<"Application"> | string | null
   matchScore?: Prisma.IntNullableFilter<"Application"> | number | null
+  matchResultJson?: Prisma.JsonNullableFilter<"Application">
   jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
   companyId?: Prisma.StringFilter<"Application"> | string
@@ -294,6 +300,7 @@ export type ApplicationOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   feedbackIA?: Prisma.SortOrderInput | Prisma.SortOrder
   matchScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  matchResultJson?: Prisma.SortOrderInput | Prisma.SortOrder
   jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -314,6 +321,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
   feedbackIA?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   matchScore?: Prisma.IntNullableWithAggregatesFilter<"Application"> | number | null
+  matchResultJson?: Prisma.JsonNullableWithAggregatesFilter<"Application">
   jobId?: Prisma.StringWithAggregatesFilter<"Application"> | string
   candidateId?: Prisma.StringWithAggregatesFilter<"Application"> | string
   companyId?: Prisma.StringWithAggregatesFilter<"Application"> | string
@@ -326,6 +334,7 @@ export type ApplicationCreateInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
@@ -339,6 +348,7 @@ export type ApplicationUncheckedCreateInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   candidateId: string
   companyId: string
@@ -352,6 +362,7 @@ export type ApplicationUpdateInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
@@ -365,6 +376,7 @@ export type ApplicationUncheckedUpdateInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -378,6 +390,7 @@ export type ApplicationCreateManyInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   candidateId: string
   companyId: string
@@ -390,6 +403,7 @@ export type ApplicationUpdateManyMutationInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -399,6 +413,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -421,6 +436,7 @@ export type ApplicationCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   feedbackIA?: Prisma.SortOrder
   matchScore?: Prisma.SortOrder
+  matchResultJson?: Prisma.SortOrder
   jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -622,6 +638,7 @@ export type ApplicationCreateWithoutCompanyInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
@@ -634,6 +651,7 @@ export type ApplicationUncheckedCreateWithoutCompanyInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   candidateId: string
   createdAt?: Date | string
@@ -675,6 +693,7 @@ export type ApplicationScalarWhereInput = {
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   feedbackIA?: Prisma.StringNullableFilter<"Application"> | string | null
   matchScore?: Prisma.IntNullableFilter<"Application"> | number | null
+  matchResultJson?: Prisma.JsonNullableFilter<"Application">
   jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
   companyId?: Prisma.StringFilter<"Application"> | string
@@ -687,6 +706,7 @@ export type ApplicationCreateWithoutJobInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
@@ -699,6 +719,7 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   candidateId: string
   companyId: string
   createdAt?: Date | string
@@ -737,6 +758,7 @@ export type ApplicationCreateWithoutCandidateInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   testLinks?: Prisma.TestLinkCreateNestedManyWithoutApplicationInput
@@ -749,6 +771,7 @@ export type ApplicationUncheckedCreateWithoutCandidateInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   companyId: string
   createdAt?: Date | string
@@ -787,6 +810,7 @@ export type ApplicationCreateWithoutTestLinksInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
@@ -799,6 +823,7 @@ export type ApplicationUncheckedCreateWithoutTestLinksInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   candidateId: string
   companyId: string
@@ -827,6 +852,7 @@ export type ApplicationUpdateWithoutTestLinksInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
@@ -839,6 +865,7 @@ export type ApplicationUncheckedUpdateWithoutTestLinksInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -851,6 +878,7 @@ export type ApplicationCreateManyCompanyInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   candidateId: string
   createdAt?: Date | string
@@ -862,6 +890,7 @@ export type ApplicationUpdateWithoutCompanyInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
@@ -874,6 +903,7 @@ export type ApplicationUncheckedUpdateWithoutCompanyInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -886,6 +916,7 @@ export type ApplicationUncheckedUpdateManyWithoutCompanyInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -897,6 +928,7 @@ export type ApplicationCreateManyJobInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   candidateId: string
   companyId: string
   createdAt?: Date | string
@@ -908,6 +940,7 @@ export type ApplicationUpdateWithoutJobInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
@@ -920,6 +953,7 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -932,6 +966,7 @@ export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -943,6 +978,7 @@ export type ApplicationCreateManyCandidateInput = {
   status?: $Enums.ApplicationStatus
   feedbackIA?: string | null
   matchScore?: number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId: string
   companyId: string
   createdAt?: Date | string
@@ -954,6 +990,7 @@ export type ApplicationUpdateWithoutCandidateInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   testLinks?: Prisma.TestLinkUpdateManyWithoutApplicationNestedInput
@@ -966,6 +1003,7 @@ export type ApplicationUncheckedUpdateWithoutCandidateInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -978,6 +1016,7 @@ export type ApplicationUncheckedUpdateManyWithoutCandidateInput = {
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   feedbackIA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchResultJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1020,6 +1059,7 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   status?: boolean
   feedbackIA?: boolean
   matchScore?: boolean
+  matchResultJson?: boolean
   jobId?: boolean
   candidateId?: boolean
   companyId?: boolean
@@ -1037,6 +1077,7 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   status?: boolean
   feedbackIA?: boolean
   matchScore?: boolean
+  matchResultJson?: boolean
   jobId?: boolean
   candidateId?: boolean
   companyId?: boolean
@@ -1052,6 +1093,7 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   status?: boolean
   feedbackIA?: boolean
   matchScore?: boolean
+  matchResultJson?: boolean
   jobId?: boolean
   candidateId?: boolean
   companyId?: boolean
@@ -1067,6 +1109,7 @@ export type ApplicationSelectScalar = {
   status?: boolean
   feedbackIA?: boolean
   matchScore?: boolean
+  matchResultJson?: boolean
   jobId?: boolean
   candidateId?: boolean
   companyId?: boolean
@@ -1074,7 +1117,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "feedbackIA" | "matchScore" | "jobId" | "candidateId" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "feedbackIA" | "matchScore" | "matchResultJson" | "jobId" | "candidateId" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   testLinks?: boolean | Prisma.Application$testLinksArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -1106,6 +1149,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     status: $Enums.ApplicationStatus
     feedbackIA: string | null
     matchScore: number | null
+    matchResultJson: runtime.JsonValue | null
     jobId: string
     candidateId: string
     companyId: string
@@ -1542,6 +1586,7 @@ export interface ApplicationFieldRefs {
   readonly status: Prisma.FieldRef<"Application", 'ApplicationStatus'>
   readonly feedbackIA: Prisma.FieldRef<"Application", 'String'>
   readonly matchScore: Prisma.FieldRef<"Application", 'Int'>
+  readonly matchResultJson: Prisma.FieldRef<"Application", 'Json'>
   readonly jobId: Prisma.FieldRef<"Application", 'String'>
   readonly candidateId: Prisma.FieldRef<"Application", 'String'>
   readonly companyId: Prisma.FieldRef<"Application", 'String'>

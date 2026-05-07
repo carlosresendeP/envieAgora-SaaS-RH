@@ -6,7 +6,8 @@ import { applicationRoutes } from "./application.routes";
 import { companyRoutes } from "./company.routes";
 import { organogramaRoutes } from "./organograma.routes";
 import { publicTestRoutes } from "./publicTest.routes";
-
+import { aiRoutes } from "./ai.routes";
+import { chatRoutes } from "./chat.routes";
 
 
 async function routes(fastify: FastifyInstance): Promise<void> {
@@ -24,6 +25,8 @@ async function routes(fastify: FastifyInstance): Promise<void> {
     fastify.register(companyRoutes, {prefix: '/company'})
     fastify.register(organogramaRoutes, {prefix: '/organograma'})
     fastify.register(publicTestRoutes, {prefix: '/public/tests'})
+    fastify.register(aiRoutes, {prefix: '/ai'})
+    fastify.register(chatRoutes, {prefix: '/chat'})
 }
 
 export default routes;

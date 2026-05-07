@@ -74,3 +74,26 @@ POST /api/organograma
 "cargo": "Diretor de TI",
 "parentId": "<id do Carlos Silva>"
 }
+
+
+
+teste em outro md
+
+## 5. IA 
+
+1. Gerar Job Description:
+
+
+POST http://localhost:3001/api/ai/jobs/:id/generate-jd
+Authorization: Bearer <token>
+(sem body)
+2. Fazer o match candidato × vaga:
+
+
+POST http://localhost:3001/api/ai/jobs/:id/match
+Authorization: Bearer <token>
+
+{
+  "candidateId": "<id do candidato>"
+}
+O candidateId vem da listagem GET /api/applications/company — campo candidate.id.

@@ -148,6 +148,7 @@ export const ApplicationScalarFieldEnum = {
   status: 'status',
   feedbackIA: 'feedbackIA',
   matchScore: 'matchScore',
+  matchResultJson: 'matchResultJson',
   jobId: 'jobId',
   candidateId: 'candidateId',
   companyId: 'companyId',

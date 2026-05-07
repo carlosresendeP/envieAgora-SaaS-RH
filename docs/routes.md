@@ -147,3 +147,18 @@ Base URL: `http://localhost:3001/api`
 
 **DELETE** `http://localhost:3001/api/organograma/:id`
 > Sem body — substitua `:id` pelo UUID do nó — requer Bearer token
+
+
+
+## IA
+
+**POST** `http://localhost:3001/api/ai/jobs/:id/generate-jd`
+> Sem body — requer Bearer token — substitua `:id` pelo UUID da vaga
+
+**POST** `http://localhost:3001/api/ai/jobs/:id/match`
+> Requer Bearer token — substitua `:id` pelo UUID da vaga
+```json
+{
+  "candidateId": "uuid-do-candidato"
+}
+```

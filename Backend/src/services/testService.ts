@@ -14,7 +14,7 @@ export class TestService {
   async createLink(applicationId: string) {
     const token = uuidv4();
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7); // 7 dias
+    expiresAt.setDate(expiresAt.getDate() + 2); // 2 dias
 
     const testLink = await prisma.testLink.create({
       data: { token, applicationId, expiresAt },

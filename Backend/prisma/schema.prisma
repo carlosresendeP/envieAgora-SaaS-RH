@@ -116,8 +116,9 @@ model Application {
   status      ApplicationStatus @default(PENDENTE)
 
   // Campos de IA
-  feedbackIA   String?           @db.Text
-  matchScore   Int?
+  feedbackIA     String?           @db.Text
+  matchScore     Int?
+  matchResultJson Json?
 
   testLinks    TestLink[]
 
