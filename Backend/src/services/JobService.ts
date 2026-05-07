@@ -66,7 +66,7 @@ export class JobService {
       updatedAt: formatBR(j.updatedAt),
     }));
   }
-
+//busca vaga pelo id
   async getById(id: string, companyId: string) {
     const job = await prisma.job.findFirst({ where: { id, companyId } });
     if (!job) throw new AppError("Vaga não encontrada", 404);

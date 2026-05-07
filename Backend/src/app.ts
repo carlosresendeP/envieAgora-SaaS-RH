@@ -1,12 +1,10 @@
 // importar o fastify e as rotas
 import Fastify from "fastify";
-// importar o fastify instance
 import type { FastifyInstance } from "fastify";
-import routes from "./Routes/index"; // -> Só ajustei o caminho para bater com a pasta que criamos
+import routes from "./Routes/index";
 import { env } from "./config/env";
 import cors from '@fastify/cors';
 
-// NOVIDADES: Importações do Zod e de Erros
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { ZodError } from "zod";
 import { AppError } from "./config/error";
@@ -22,9 +20,19 @@ app.register(cors, {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Métodos HTTP permitidos
 });
 
-// Ensina o Fastify a usar o Zod nativamente nas rotas[cite: 2]
+//validações do fastify com zod
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+// Permite body vazio em requisições com Content-Type: application/json (ex: DELETE)
+app.addContentTypeParser('application/json', { parseAs: 'string' }, (req, body, done) => {
+  if (!body || body === '') return done(null, {});
+  try {
+    done(null, JSON.parse(body as string));
+  } catch (err) {
+    done(err as Error, undefined);
+  }
+});
 
 // Tratamento Global de Erros: Segurança máxima para não vazar dados[cite: 2]
 app.setErrorHandler((error, request, reply) => {

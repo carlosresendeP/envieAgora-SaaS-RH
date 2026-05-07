@@ -65,6 +65,11 @@ export class ApplicationService {
       ...application,
       createdAt: formatBR(application.createdAt),
       updatedAt: formatBR(application.updatedAt),
+      candidate: {
+        ...application.candidate,
+        createdAt: formatBR(application.candidate.createdAt),
+        updatedAt: formatBR(application.candidate.updatedAt),
+      },
     };
   }
 
@@ -82,6 +87,11 @@ export class ApplicationService {
       ...a,
       createdAt: formatBR(a.createdAt),
       updatedAt: formatBR(a.updatedAt),
+      candidate: {
+        ...a.candidate,
+        createdAt: formatBR(a.candidate.createdAt),
+        updatedAt: formatBR(a.candidate.updatedAt),
+      },
     }));
   }
 
@@ -95,6 +105,11 @@ export class ApplicationService {
       ...a,
       createdAt: formatBR(a.createdAt),
       updatedAt: formatBR(a.updatedAt),
+      candidate: {
+        ...a.candidate,
+        createdAt: formatBR(a.candidate.createdAt),
+        updatedAt: formatBR(a.candidate.updatedAt),
+      },
     }));
   }
 

@@ -48,3 +48,29 @@ Para `GET /api/applications/company` retornar dados, siga esta ordem:
 **GET** `/api/applications/company` — requer Bearer token
 
 Agora retorna a lista com os candidatos inscritos.
+
+
+# O Organograma serve para a empresa mapear sua estrutura hierárquica — quem está em qual posição, quem responde a quem.
+
+
+1. Criar o nó raiz (CEO):
+
+POST /api/organograma
+
+```
+{
+"nome": "Carlos Silva",
+"cargo": "CEO",
+"parentId": null
+}
+```
+
+2. Criar um nó filho (Diretor de TI) e conectar ao CEO:
+
+POST /api/organograma
+
+{
+"nome": "Ana Lima",
+"cargo": "Diretor de TI",
+"parentId": "<id do Carlos Silva>"
+}

@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodSchema } from "zod";
 
-export const validateSchema = (schema: ZodSchema) => {
-  return async (req: FastifyRequest, reply: FastifyReply) => {
-    // 1. Executa o parse do Zod nos dados que chegaram no body
-    const result = schema.safeParse(req.body);
+type Source = "body" | "params" | "query";
 
-    // 2. Se a validação falhar, para a requisição aqui mesmo e retorna 400
+export const validateSchema = (schema: ZodSchema, source: Source = "body") => {
+  return async (req: FastifyRequest, reply: FastifyReply) => {
+    const result = schema.safeParse(req[source]);
+
     if (!result.success) {
       return reply.status(400).send({
         ok: false,
@@ -15,10 +15,6 @@ export const validateSchema = (schema: ZodSchema) => {
       });
     }
 
-    // 3. Se passar, sobrescreve o req.body com os dados limpos/formatados pelo Zod
-    req.body = result.data;
-    
-    // No Fastify, ao usar funções async no preHandler, 
-    // basta não retornar erro para ele seguir adiante.
+    (req as Record<string, unknown>)[source] = result.data;
   };
 };

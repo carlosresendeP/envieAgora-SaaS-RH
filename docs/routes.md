@@ -118,3 +118,32 @@ Base URL: `http://localhost:3001/api`
 }
 ```
 > Status disponíveis: `PENDENTE` | `EM_ANALISE` | `TESTE_PSICOMETRICO` | `ENTREVISTA` | `APROVADO` | `REPROVADO`
+
+
+---
+
+## Organograma
+
+**POST** `http://localhost:3001/api/organograma`
+```json
+{
+  "nome": "Carlos Silva",
+  "cargo": "CEO",
+  "parentId": null
+}
+```
+
+**POST** `http://localhost:3001/api/organograma` _(nó filho)_
+```json
+{
+  "nome": "Ana Lima",
+  "cargo": "CTO",
+  "parentId": "<id do nó pai>"
+}
+```
+
+**GET** `http://localhost:3001/api/organograma`
+> Sem body — requer Bearer token
+
+**DELETE** `http://localhost:3001/api/organograma/:id`
+> Sem body — substitua `:id` pelo UUID do nó — requer Bearer token
