@@ -1,3 +1,5 @@
+'use client'
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -5,6 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Brain, Kanban, Bot, Check, PlayCircle, Star, Rocket } from "lucide-react"
 import { Header } from "@/components/landing/Header"
+import { CTAButton } from "@/components/landing/CTAButton"
 
 const VALUE_CARDS = [
   {
@@ -61,7 +64,7 @@ export default function LandingPage() {
 
         {/* ── Hero ───────────────────────────────────────────────────────── */}
         <section className="px-6 py-16 md:py-24 relative">
-          <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-br from-muted to-background -z-10 rounded-b-[40px] md:rounded-br-[120px]" />
+          <div className="absolute top-0 left-0 w-full h-[600px] bg-linear-to-br from-muted to-background -z-10 rounded-b-[40px] md:rounded-br-[120px]" />
 
           <div className="flex flex-col gap-6 z-10 items-center text-center mx-auto max-w-4xl">
             <Badge variant="outline" className="rounded-full px-4 py-1 text-xs font-bold uppercase tracking-widest">
@@ -79,13 +82,7 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-2">
-              <Button size="lg" className="rounded-full px-8 shadow-md">
-                Começar Agora
-              </Button>
-              <Button variant="outline" size="lg" className="rounded-full px-8 gap-2">
-                <PlayCircle className="size-4" />
-                Ver Demonstração
-              </Button>
+              <CTAButton />
             </div>
           </div>
         </section>

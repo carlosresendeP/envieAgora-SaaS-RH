@@ -17,16 +17,19 @@ export const useAuthStore = create<AuthState>((set) => ({
   token:           null,
   isAuthenticated: false,
 
+  // Define os dados do usuário no estado e salva o token no storage
   setAuth: (user, token) => {
     tokenStorage.set(token)
     set({ user, token, isAuthenticated: true })
   },
 
+  // Limpa o estado global e remove o token do storage
   clearAuth: () => {
     tokenStorage.clear()
     set({ user: null, token: null, isAuthenticated: false })
   },
 
+  // Restaura a sessão ao recarregar a página, validando o token com o backend
   hydrate: async () => {
     const token = tokenStorage.get()
     if (!token) return

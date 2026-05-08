@@ -1,13 +1,22 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Leaf, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useAuth } from "@/hooks/useAuth"
 
 const NAV_LINKS = ["Soluções", "Preços", "Sobre"]
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  function handleEnter() {
+    router.push(isAuthenticated ? "/dashboard" : "/login")
+    setOpen(false)
+  }
 
   return (
     <header className="w-full max-w-[1440px] mx-auto px-6 py-4 relative z-20">
@@ -36,6 +45,7 @@ export function Header() {
             variant="outline"
             size="sm"
             className="rounded-full px-6 hover:bg-primary hover:text-primary-foreground"
+            onClick={handleEnter}
           >
             Entrar
           </Button>
@@ -69,7 +79,7 @@ export function Header() {
               variant="outline"
               size="sm"
               className="w-full rounded-full hover:bg-primary hover:text-primary-foreground"
-              onClick={() => setOpen(false)}
+              onClick={handleEnter}
             >
               Entrar
             </Button>
