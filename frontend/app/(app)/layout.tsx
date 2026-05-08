@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useAuthStore } from "@/store/auth.store"
 import { useAuth } from "@/hooks/useAuth"
 import { Sidebar } from "@/components/layout/Sidebar"
@@ -9,9 +9,12 @@ import { Topbar } from "@/components/layout/Topbar"
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const pathname = usePathname()
   const { isAuthenticated } = useAuth()
   const hydrate = useAuthStore((s) => s.hydrate)
   const [hydrated, setHydrated] = useState(false)
+
+  const isOnboarding = pathname.startsWith("/onboarding")
 
   useEffect(() => {
     hydrate().finally(() => setHydrated(true))
@@ -24,6 +27,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }, [hydrated, isAuthenticated, router])
 
   if (!hydrated || !isAuthenticated) return null
+
+  if (isOnboarding) {
+    return (
+      <div className="h-screen flex flex-col overflow-hidden">
+        <Topbar />
+        <main className="flex-1 overflow-y-auto p-6 bg-background">
+          {children}
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="h-screen grid grid-cols-[240px_1fr] overflow-hidden">

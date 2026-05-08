@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { authService } from "@/services/auth.service"
+import { companyService } from "@/services/company.service"
 import { useAuth } from "@/hooks/useAuth"
 
 export default function LoginPage() {
@@ -28,7 +29,15 @@ export default function LoginPage() {
     try {
       const { user, token } = await authService.login(values)
       setAuth(user, token)
-      router.push("/dashboard")
+      // Redireciona para o onboarding se não foi concluído
+      try {
+        const company = await companyService.get()
+        const step = company.onboardingStep
+        // onboardingStep começa em 1 (backend default). Completo = 5.
+        router.push(step >= 5 ? "/dashboard" : `/onboarding/etapa-${step}`)
+      } catch {
+        router.push("/dashboard")
+      }
     } catch {
       toast.error("E-mail ou senha incorretos", { duration: 5000 })
     }

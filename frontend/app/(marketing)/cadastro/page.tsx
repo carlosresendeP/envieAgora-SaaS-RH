@@ -13,6 +13,15 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { authService } from "@/services/auth.service"
 
+function formatCNPJ(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 14)
+  return digits
+    .replace(/^(\d{2})(\d)/, "$1.$2")
+    .replace(/^(\d{2}\.\d{3})(\d)/, "$1.$2")
+    .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/, "$1/$2")
+    .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/, "$1-$2")
+}
+
 export default function CadastroPage() {
   const router = useRouter()
 
@@ -21,6 +30,8 @@ export default function CadastroPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CadastroFields>({ resolver: zodResolver(CadastroSchema) })
+
+  const { onChange: onCnpjChange, ...cnpjProps } = register("cnpj")
 
   async function onSubmit(values: CadastroFields) {
     try {
@@ -122,7 +133,19 @@ export default function CadastroPage() {
                 </Label>
                 <div className="relative">
                   <Hash className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
-                  <Input id="cnpj" type="text" placeholder="00.000.000/0000-00" className="pl-10" {...register("cnpj")} />
+                  <Input
+                    id="cnpj"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="00.000.000/0000-00"
+                    className="pl-10"
+                    maxLength={18}
+                    {...cnpjProps}
+                    onChange={(e) => {
+                      e.target.value = formatCNPJ(e.target.value)
+                      onCnpjChange(e)
+                    }}
+                  />
                 </div>
                 {errors.cnpj && <p className="text-xs text-destructive">{errors.cnpj.message}</p>}
               </div>
