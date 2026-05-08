@@ -288,6 +288,26 @@ app/(app)/candidatos/page.tsx
 
 ---
 
+## Etapa 15 — Portal Público de Candidatura ✅
+
+```
+app/candidatar/[publicToken]/page.tsx
+```
+
+- Página pública (sem auth) acessada via link único gerado por vaga
+- Exibe: logo da empresa, título, descrição da vaga, faixa salarial
+- Formulário: nome*, email*, telefone, upload de currículo PDF (opcional)
+- Upload via `POST /api/public/upload` → retorna URL → enviada no apply
+- Submit → `POST /api/applications/apply` → tela de confirmação
+- `services/public.service.ts` — `getJob(token)`, `uploadResume(file)`, `apply(body)`
+
+**Backend necessário:**
+- `GET /api/public/jobs/:publicToken` — retorna vaga + logo da empresa (sem auth)
+- `POST /api/public/upload` — aceita PDF (multipart), salva em `backend/uploads/`
+- `GET /api/public/uploads/:filename` — serve o arquivo
+
+---
+
 ## Etapa 13 — Portal do Candidato ✅
 
 ```

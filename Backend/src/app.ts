@@ -4,6 +4,7 @@ import type { FastifyInstance } from "fastify";
 import routes from "./Routes/index";
 import { env } from "./config/env";
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { ZodError } from "zod";
@@ -13,6 +14,10 @@ const app: FastifyInstance = Fastify({
     logger: {
         level: env.NODE_ENV === 'dev' ? 'info': 'error',
     },
+});
+
+app.register(multipart, {
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
 });
 
 app.register(cors, {
