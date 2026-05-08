@@ -20,6 +20,13 @@ export async function organogramaRoutes(app: FastifyInstance) {
     organogramaController.create
   );
 
+  // PATCH /organograma/:id - Atualiza um nó do organograma
+  app.patch<{ Params: ParamsIdDTO; Body: Partial<OrganogramaDTO> }>(
+    "/:id",
+    { preHandler: [validateSchema(paramsIdDTO, 'params')] },
+    organogramaController.update
+  );
+
   // DELETE /organograma/:id - Remove um nó
   app.delete<{ Params: { id: string } }>(
     "/:id",

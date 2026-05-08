@@ -32,6 +32,24 @@ export class OrganogramaService {
     };
   }
 
+  // atualizando um nó do organograma
+  async executeUpdate(id: string, data: Partial<OrganogramaDTO>, companyId: string) {
+    const node = await prisma.organogramaNode.findFirst({ where: { id, companyId } });
+
+    if (!node) throw new AppError('Nó não encontrado', 404);
+
+    const updated = await prisma.organogramaNode.update({
+      where: { id },
+      data,
+    });
+
+    return {
+      ...updated,
+      createdAt: formatBR(updated.createdAt),
+      updatedAt: formatBR(updated.updatedAt),
+    };
+  }
+
   async executeDelete(id: string, companyId: string) {
     const node = await prisma.organogramaNode.findFirst({ where: { id, companyId } });
 

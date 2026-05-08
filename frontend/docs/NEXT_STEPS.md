@@ -7,16 +7,16 @@
 
 ## O que já está feito ✅
 
-| Arquivo | Status |
-|---|---|
-| `app/globals.css` — tokens OKLCH + Montserrat | ✅ |
-| `app/layout.tsx` — fontes configuradas | ✅ |
-| `app/page.tsx` — landing page | ✅ |
-| `components/landing/Header.tsx` — menu mobile | ✅ |
-| `app/(marketing)/layout.tsx` — layout público | ✅ |
-| `types/api.ts` — tipos derivados do Prisma | ✅ |
-| `lib/utils.ts` — `cn()` | ✅ |
-| shadcn: button, badge, input, avatar, progress | ✅ |
+| Arquivo                                        | Status |
+| ---------------------------------------------- | ------ |
+| `app/globals.css` — tokens OKLCH + Montserrat  | ✅     |
+| `app/layout.tsx` — fontes configuradas         | ✅     |
+| `app/page.tsx` — landing page                  | ✅     |
+| `components/landing/Header.tsx` — menu mobile  | ✅     |
+| `app/(marketing)/layout.tsx` — layout público  | ✅     |
+| `types/api.ts` — tipos derivados do Prisma     | ✅     |
+| `lib/utils.ts` — `cn()`                        | ✅     |
+| shadcn: button, badge, input, avatar, progress | ✅     |
 
 ---
 
@@ -47,27 +47,31 @@ pnpm dlx shadcn@latest add \  | ✅ |
 Arquivos puros de utilitário — zero UI, zero estado. Base de tudo.
 
 ### 2.1 `lib/tokens.ts`
+
 ```ts
-const KEY = "saas_rh_token"
+const KEY = "saas_rh_token";
 export const tokenStorage = {
-  get:   () => typeof window !== "undefined" ? localStorage.getItem(KEY) : null,
-  set:   (t: string) => localStorage.setItem(KEY, t),
+  get: () => (typeof window !== "undefined" ? localStorage.getItem(KEY) : null),
+  set: (t: string) => localStorage.setItem(KEY, t),
   clear: () => localStorage.removeItem(KEY),
-}
+};
 ```
 
 ### 2.2 `lib/api.ts` — Axios + interceptors JWT
+
 - Cria instância com `baseURL = process.env.NEXT_PUBLIC_API_URL`
 - Interceptor de request: injeta `Authorization: Bearer <token>`
 - Interceptor de response: em 401, limpa token e redireciona `/login`
 
 ### 2.3 `lib/utils.ts` — adicionar formatadores
+
 ```ts
-export function formatDate(date: string | Date): string
-export function formatRelative(date: string | Date): string  // "hoje", "ontem", "há 3 dias"
+export function formatDate(date: string | Date): string;
+export function formatRelative(date: string | Date): string; // "hoje", "ontem", "há 3 dias"
 ```
 
 ### 2.4 `.env.local`
+
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3333
 ```
@@ -79,10 +83,12 @@ NEXT_PUBLIC_API_URL=http://localhost:3333
 ## Etapa 3 — Estado de Auth (`store/` + `hooks/`)
 
 ### 3.1 `store/auth.store.ts` — Zustand
+
 Campos: `user: AuthUser | null`, `token: string | null`, `isAuthenticated: boolean`
 Actions: `setAuth(user, token)`, `clearAuth()`, `hydrate()` (chama `GET /me`)
 
 ### 3.2 `hooks/useAuth.ts`
+
 Wrapper fino sobre o store — expõe só o que os componentes precisam.
 
 **Por quê antes do shell:** `AuthGuard` e `Sidebar` dependem de `useAuth`.
@@ -98,8 +104,8 @@ Atualizar `app/layout.tsx` para envolver toda a aplicação com:
 
 ```tsx
 // components/providers/QueryProvider.tsx
-"use client"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // staleTime: 60s, retry: 1
 ```
 
@@ -110,16 +116,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 ## Etapa 5 — Páginas de Auth
 
 ### 5.1 `services/auth.service.ts`
+
 - `login(body)` → `POST /login`
 - `signup(body)` → `POST /register`
 - `me()` → `GET /me`
 
 ### 5.2 `app/(marketing)/login/page.tsx`
+
 - Layout two-panel: esquerda Verde Floresta com slogan, direita form
 - Campos: email + senha (RHF + Zod)
 - Submit → `authService.login` → `setAuth` → `router.push("/dashboard")`
 
 ### 5.3 `app/(marketing)/cadastro/page.tsx`
+
 - Campos: nome, email, senha, razão social, CNPJ (RHF + Zod)
 - Submit → `authService.signup` → `setAuth` → `router.push("/onboarding/etapa-1")`
 
@@ -132,26 +141,31 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 Tudo que envolve a área protegida do app.
 
 ### 6.1 `app/(app)/layout.tsx`
+
 - `"use client"` — chama `hydrate()` no mount
 - Grid: `grid-cols-[240px_1fr]`
 - `AuthGuard`: se `!isAuthenticated` após 300ms → `router.replace("/login")`
 - Renderiza `<Sidebar />` + `<main>`
 
 ### 6.2 `components/layout/Sidebar.tsx`
+
 - Background `bg-sidebar` (Verde Floresta)
 - Nav items: Dashboard, Vagas, Organograma, Chat IA
 - Item ativo: borda esquerda `bg-primary` + texto neon
 - Footer: avatar do usuário + botão Sair
 
 ### 6.3 `components/layout/Topbar.tsx`
+
 - Nome da empresa + nome do usuário
 - Avatar com dropdown (Perfil, Sair)
 
 ### 6.4 `components/layout/EmptyState.tsx`
+
 - Ícone + título + descrição + botão de ação (opcional)
 - Usado por todas as páginas com estado vazio
 
 ### 6.5 `app/(app)/error.tsx`
+
 - Boundary de erro global para o grupo `(app)`
 
 **Checkpoint:** navegar para `/dashboard` sem token deve redirecionar para `/login`.
@@ -170,10 +184,12 @@ app/(app)/onboarding/
 ```
 
 ### Services necessários
+
 - `services/company.service.ts` — `get()`, `update()`, `setOnboardingStep(n)`
 - `services/organograma.service.ts` — `list()`, `create()`, `delete(id)`
 
 ### Componentes
+
 - `components/onboarding/WizardStepper.tsx`
 - `components/onboarding/OrganogramaTree.tsx`
 - `hooks/useViaCep.ts` — lookup de CEP para etapa 1
@@ -207,9 +223,11 @@ app/(app)/vagas/
 ```
 
 ### Services necessários
+
 - `services/candidate.service.ts` — `listByJob(jobId)`, `apply()`
 
 ### Componentes principais
+
 - `components/vagas/JdPreview.tsx` — card editável com borda neon ao gerar JD
 - `components/vagas/CandidatesRepeater.tsx` — adicionar N candidatos
 - `components/relatorio/RankingSidebar.tsx` — lista ranqueada por score
@@ -290,23 +308,23 @@ app/teste/[token]/
 
 ## Visão Geral — Estimativa
 
-| Etapa | Complexidade | Tempo estimado |
-|---|---|---|
-| 1 — Deps | Baixa | 5 min |
-| 2 — Lib | Baixa | 30 min |
-| 3 — Store Auth | Baixa | 20 min |
-| 4 — Providers | Baixa | 15 min |
-| 5 — Auth pages | Média | 45 min |
-| 6 — App shell | Média | 1h |
-| 7 — Onboarding | Alta | 2h |
-| 8 — Dashboard | Média | 45 min |
-| 9 — Vagas | Alta | 3h |
-| 10 — Organograma | Média | 1.5h |
-| 11 — Chat | Média | 1h |
-| 12 — Config | Baixa | 45 min |
-| 13 — Portal candidato | Alta | 2h |
-| 14 — Pipeline candidatos | Média | 1h |
-| **Total** | | **~15h** |
+| Etapa                    | Complexidade | Tempo estimado |
+| ------------------------ | ------------ | -------------- |
+| 1 — Deps                 | Baixa        | 5 min          |
+| 2 — Lib                  | Baixa        | 30 min         |
+| 3 — Store Auth           | Baixa        | 20 min         |
+| 4 — Providers            | Baixa        | 15 min         |
+| 5 — Auth pages           | Média        | 45 min         |
+| 6 — App shell            | Média        | 1h             |
+| 7 — Onboarding           | Alta         | 2h             |
+| 8 — Dashboard            | Média        | 45 min         |
+| 9 — Vagas                | Alta         | 3h             |
+| 10 — Organograma         | Média        | 1.5h           |
+| 11 — Chat                | Média        | 1h             |
+| 12 — Config              | Baixa        | 45 min         |
+| 13 — Portal candidato    | Alta         | 2h             |
+| 14 — Pipeline candidatos | Média        | 1h             |
+| **Total**                |              | **~15h**       |
 
 ---
 

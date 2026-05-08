@@ -15,6 +15,11 @@ export class OrganogramaController {
     return reply.status(201).send({ ok: true, data });
   };
 
+  update = async (req: FastifyRequest<{ Params: ParamsIdDTO; Body: Partial<OrganogramaDTO> }>, reply: FastifyReply) => {
+    const data = await this.organogramaService.executeUpdate(req.params.id, req.body, req.user.companyId);
+    return reply.send({ ok: true, data });
+  };
+
   delete = async (req: FastifyRequest<{ Params: ParamsIdDTO }>, reply: FastifyReply) => {
 
     await this.organogramaService.executeDelete(req.params.id, req.user.companyId);
