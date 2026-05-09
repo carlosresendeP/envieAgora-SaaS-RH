@@ -55,8 +55,12 @@ export default function NovaVagaComIaPage() {
       const jd = await jobService.generateJd(job.id)
       setJdContent(jd)
       setStep("preview")
-    } catch {
-      toast.error("Erro ao gerar descrição. Tente novamente.")
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { error?: string } } })?.response?.data?.error ??
+        "Erro ao gerar descrição. Tente novamente."
+      console.error("[generateJd]", err)
+      toast.error(msg)
     } finally {
       setIsGenerating(false)
     }

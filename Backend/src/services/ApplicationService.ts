@@ -36,6 +36,16 @@ export class ApplicationService {
           linkedinUrl:  data.linkedinUrl,
         }
       });
+    } else {
+      candidate = await prisma.candidate.update({
+        where: { email: data.email },
+        data: {
+          nome:         data.nome,
+          telefone:     data.telefone ?? candidate.telefone,
+          curriculoUrl: data.curriculoUrl ?? candidate.curriculoUrl,
+          linkedinUrl:  data.linkedinUrl ?? candidate.linkedinUrl,
+        }
+      });
     }
 
     // 3. Verificar se o candidato já está inscrito NESTA vaga
