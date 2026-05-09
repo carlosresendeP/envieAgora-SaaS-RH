@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -63,6 +64,24 @@ function TabBtn({ active, onClick, children }: { active: boolean; onClick: () =>
   )
 }
 
+// ─── Contexto Word Count ──────────────────────────────────────────────────────
+
+function ContextoWordCount({ texto }: { texto: string }) {
+  const words = texto.trim() === "" ? 0 : texto.trim().split(/\s+/).length
+  const color =
+    words >= 100 ? "text-green-600" :
+    words >= 50  ? "text-yellow-600" :
+                   "text-muted-foreground"
+  return (
+    <p className={`text-xs ${color}`}>
+      {words} {words === 1 ? "palavra" : "palavras"}
+      {words < 50  && " · recomendado: mínimo 100"}
+      {words >= 50 && words < 100 && " · quase lá, tente chegar em 100"}
+      {words >= 100 && " · ótimo!"}
+    </p>
+  )
+}
+
 // ─── Empresa Tab ──────────────────────────────────────────────────────────────
 
 function EmpresaTab() {
@@ -72,19 +91,21 @@ function EmpresaTab() {
   // values= sincroniza automaticamente quando company chega — sem useEffect
   const { control, setValue, reset } = useForm({
     values: {
-      nome:        company?.nome        ?? "",
-      razaoSocial: company?.razaoSocial ?? "",
-      logoUrl:     company?.logoUrl     ?? "",
-      valores:     company?.valores     ?? [] as string[],
-      perfilRitmo: company?.perfilRitmo ?? "",
+      nome:            company?.nome            ?? "",
+      razaoSocial:     company?.razaoSocial     ?? "",
+      logoUrl:         company?.logoUrl         ?? "",
+      valores:         company?.valores         ?? [] as string[],
+      perfilRitmo:     company?.perfilRitmo     ?? "",
+      contextoEmpresa: company?.contextoEmpresa ?? "",
     },
   })
 
-  const nome        = useWatch({ control, name: "nome" })
-  const razaoSocial = useWatch({ control, name: "razaoSocial" })
-  const logoUrl     = useWatch({ control, name: "logoUrl" })
-  const valores     = useWatch({ control, name: "valores" })
-  const perfilRitmo = useWatch({ control, name: "perfilRitmo" })
+  const nome            = useWatch({ control, name: "nome" })
+  const razaoSocial     = useWatch({ control, name: "razaoSocial" })
+  const logoUrl         = useWatch({ control, name: "logoUrl" })
+  const valores         = useWatch({ control, name: "valores" })
+  const perfilRitmo     = useWatch({ control, name: "perfilRitmo" })
+  const contextoEmpresa = useWatch({ control, name: "contextoEmpresa" })
 
   const [novoValor, setNovoValor] = useState("")
   const [isUploading, setIsUploading] = useState(false)
@@ -110,11 +131,12 @@ function EmpresaTab() {
   const updateMutation = useMutation({
     mutationFn: () =>
       companyService.update({
-        nome:        nome.trim()        || undefined,
-        razaoSocial: razaoSocial.trim() || undefined,
-        logoUrl:     logoUrl.trim()     || undefined,
+        nome:            nome.trim()            || undefined,
+        razaoSocial:     razaoSocial.trim()     || undefined,
+        logoUrl:         logoUrl.trim()         || undefined,
         valores,
-        perfilRitmo: perfilRitmo        || undefined,
+        perfilRitmo:     perfilRitmo            || undefined,
+        contextoEmpresa: contextoEmpresa.trim() || undefined,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["company"] })
@@ -249,6 +271,30 @@ function EmpresaTab() {
             <Input value={company?.cnpj ?? ""} readOnly className="bg-muted text-muted-foreground cursor-not-allowed" />
             <p className="text-xs text-muted-foreground">Contate o suporte para alterar o CNPJ.</p>
           </div>
+        </div>
+      </section>
+
+      <div className="h-px bg-border" />
+
+      {/* Contexto da Empresa */}
+      <section className="space-y-3">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+            Contexto da Empresa
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            A IA usa esse texto para entender o momento atual da empresa e avaliar o fit dos candidatos.
+          </p>
+        </div>
+        <div className="space-y-1.5">
+          <Textarea
+            id="contextoEmpresa"
+            value={contextoEmpresa}
+            onChange={(e) => setValue("contextoEmpresa", e.target.value)}
+            placeholder="Descreva o momento atual da sua empresa: fase de crescimento, principais desafios, cultura do time, como é o dia a dia, o que espera dos colaboradores..."
+            className="min-h-32 resize-y"
+          />
+          <ContextoWordCount texto={contextoEmpresa} />
         </div>
       </section>
 

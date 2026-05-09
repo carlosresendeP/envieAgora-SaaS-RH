@@ -3,6 +3,7 @@ import { AppError } from "@/config/error";
 import { ApplyJobDTO } from "../schemas/application.schema";
 import { ApplicationStatus } from "@/generated/prisma/enums";
 import { formatBR } from "@/config/dayjs";
+import { emailService } from "./emailService";
 
 export class ApplicationService {
   async apply(data: ApplyJobDTO) {
@@ -60,6 +61,20 @@ export class ApplicationService {
         job: { select: { titulo: true } }
       }
     });
+
+    // Notifica o RH
+    const hrUser = await prisma.user.findFirst({
+      where: { companyId: job.companyId },
+      select: { email: true },
+    });
+    if (hrUser) {
+      await emailService.sendNewApplication({
+        to: hrUser.email,
+        candidateName: candidate.nome,
+        candidateEmail: candidate.email,
+        jobTitle: application.job.titulo,
+      });
+    }
 
     return {
       ...application,

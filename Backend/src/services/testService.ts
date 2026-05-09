@@ -35,7 +35,7 @@ export class TestService {
     const expiresAtFormatted = formatBR(testLink.expiresAt);
 
     await emailService.sendTestLink({
-      to: 'carlosale.paula2001@gmail.com',  //-> application.candidate.email
+      to: application.candidate.email,
       candidateName: application.candidate.nome,
       jobTitle: application.job.titulo,
       testUrl: url,
@@ -51,7 +51,10 @@ export class TestService {
       where: { token },
       include: {
         application: {
-          include: { candidate: true },
+          include: {
+            candidate: true,
+            job: { select: { titulo: true } },
+          },
         },
       },
     });
@@ -88,6 +91,19 @@ export class TestService {
 
     // Invalida o token após uso
     await prisma.testLink.delete({ where: { id: link.id } });
+
+    // Notifica o RH
+    const hrUser = await prisma.user.findFirst({
+      where: { companyId: link.application.companyId },
+      select: { email: true },
+    });
+    if (hrUser) {
+      await emailService.sendTestCompleted({
+        to: hrUser.email,
+        candidateName: link.application.candidate.nome,
+        jobTitle: link.application.job.titulo,
+      });
+    }
 
     return { ok: true, results: testResults };
   }
