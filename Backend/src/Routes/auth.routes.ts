@@ -26,4 +26,8 @@ export async function authRoutes(app: FastifyInstance) {
   );
 
   app.get("/me", { preHandler: [authMiddleware] }, authController.me);
+
+  app.post<{ Body: { refreshToken: string } }>("/refresh", authController.refresh);
+
+  app.post<{ Body: { refreshToken?: string } }>("/logout", authController.logout);
 }

@@ -27,8 +27,8 @@ export default function LoginPage() {
 
   async function onSubmit(values: LoginFields) {
     try {
-      const { user, token } = await authService.login(values)
-      setAuth(user, token)
+      const { user, token, refreshToken } = await authService.login(values)
+      setAuth(user, token, refreshToken)
       // Redireciona para o onboarding se não foi concluído
       try {
         const company = await companyService.get()

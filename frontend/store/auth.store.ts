@@ -7,7 +7,7 @@ interface AuthState {
   user:            AuthUser | null
   token:           string | null
   isAuthenticated: boolean
-  setAuth:         (user: AuthUser, token: string) => void
+  setAuth:         (user: AuthUser, accessToken: string, refreshToken: string) => void
   clearAuth:       () => void
   hydrate:         () => Promise<void>
 }
@@ -18,9 +18,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
 
   // Define os dados do usuário no estado e salva o token no storage
-  setAuth: (user, token) => {
-    tokenStorage.set(token)
-    set({ user, token, isAuthenticated: true })
+  setAuth: (user, accessToken, refreshToken) => {
+    tokenStorage.set(accessToken)
+    tokenStorage.setRefresh(refreshToken)
+    set({ user, token: accessToken, isAuthenticated: true })
   },
 
   // Limpa o estado global e remove o token do storage

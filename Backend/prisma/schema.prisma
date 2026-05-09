@@ -40,11 +40,21 @@ model User {
   role      String   @default("admin")
   createdAt DateTime @default(now())
 
-  // Relação obrigatória: Se a empresa for deletada, o usuário também é (Cascade)
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  refreshTokens RefreshToken[]
 
-  // Índice para buscas rápidas e seguras por empresa
   @@index([companyId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
 }
 
 enum JobStatus {

@@ -17,6 +17,7 @@ import {
   Loader2,
   Copy,
   Check,
+  ExternalLink,
 } from "lucide-react"
 import { toast } from "sonner"
 import { applicationService } from "@/services/application.service"
@@ -301,6 +302,16 @@ export default function CandidatoProfilePage() {
                 ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* Ver vaga */}
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => router.push(`/vagas/${app.jobId}`)}
+          >
+            <ExternalLink className="size-3.5 mr-1.5" />
+            Ver Vaga
+          </Button>
 
           {/* Test link */}
           {testLink ? (

@@ -10,6 +10,7 @@
  */
 export type * from './models/Company'
 export type * from './models/User'
+export type * from './models/RefreshToken'
 export type * from './models/Job'
 export type * from './models/Candidate'
 export type * from './models/Application'

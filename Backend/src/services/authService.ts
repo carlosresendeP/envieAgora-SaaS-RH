@@ -1,9 +1,16 @@
 import bcrypt from "bcryptjs";
-import { prisma } from "@/config/prisma"; 
+import { prisma } from "@/config/prisma";
 import { AppError } from "@/config/error";
 import type { RegisterDTO, LoginDTO } from "../schemas/auth.schema";
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import { randomUUID } from "crypto";
 import { env } from "../config/env";
+
+const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000 // 7 dias
+
+function generateRefreshToken() {
+  return randomUUID() + randomUUID() // 72 hex chars, sem hifens
+}
 
 export class AuthService {
   async register({ nome, email, password, razaoSocial, cnpj }: RegisterDTO) {
@@ -65,25 +72,62 @@ export class AuthService {
       throw new AppError("Company data not found.", 500);
     }
 
-    // 4. GERA O TOKEN
-    const payload = { 
-      sub: user.id, 
-      companyId: user.companyId, 
-      role: user.role 
+    // 4. Gera access token (1h) + refresh token (7d)
+    const payload = {
+      sub: user.id,
+      companyId: user.companyId,
+      role: user.role,
     };
-    
-    const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: "7d" });
+
+    const accessToken = jwt.sign(payload, env.JWT_SECRET, { expiresIn: "1h" });
+
+    const rawRefresh = generateRefreshToken();
+    const expiresAt  = new Date(Date.now() + REFRESH_TTL_MS);
+
+    // Limpa tokens antigos do usuário antes de criar novo
+    await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
+    await prisma.refreshToken.create({ data: { token: rawRefresh, userId: user.id, expiresAt } });
 
     return {
-      token,
-      user: {
-        id: user.id,
-        nome: user.nome,
-        email: user.email,
-        role: user.role,
-      },
-      company, // Retorna os dados da empresa também
+      accessToken,
+      refreshToken: rawRefresh,
+      user: { id: user.id, nome: user.nome, email: user.email, role: user.role },
+      company,
     };
+  }
+
+  async refresh(token: string) {
+    const stored = await prisma.refreshToken.findUnique({ where: { token } });
+
+    if (!stored) throw new AppError("Sessão inválida.", 401);
+    if (new Date() > stored.expiresAt) {
+      await prisma.refreshToken.delete({ where: { id: stored.id } });
+      throw new AppError("Sessão expirada. Faça login novamente.", 401);
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: stored.userId } });
+    if (!user) throw new AppError("Usuário não encontrado.", 401);
+
+    // Rotação: gera novo refresh token
+    const newRawRefresh = generateRefreshToken();
+    const newExpiresAt  = new Date(Date.now() + REFRESH_TTL_MS);
+
+    await prisma.refreshToken.update({
+      where: { id: stored.id },
+      data: { token: newRawRefresh, expiresAt: newExpiresAt },
+    });
+
+    const accessToken = jwt.sign(
+      { sub: user.id, companyId: user.companyId, role: user.role },
+      env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    return { accessToken, refreshToken: newRawRefresh };
+  }
+
+  async logout(token: string) {
+    await prisma.refreshToken.deleteMany({ where: { token } });
   }
 
 

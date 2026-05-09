@@ -1,5 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { AuthService } from "@/services/authService";
+import { AppError } from "@/config/error";
 import type { LoginDTO, RegisterDTO } from "../schemas/auth.schema";
 
 export class AuthController {
@@ -39,18 +40,34 @@ export class AuthController {
 
     return reply.status(200).send({
       ok: true,
-      data: {
-        user: result.user,
-        company: result.company,
-      },
-      token: result.token,
+      data: { user: result.user, company: result.company },
+      token: result.accessToken,
+      refreshToken: result.refreshToken,
     });
   };
 
-//Get Current User
-  me = async (req: FastifyRequest, reply: FastifyReply) => {
-  const user = await this.authService.getMe(req.user.userId);
+  refresh = async (
+    req: FastifyRequest<{ Body: { refreshToken: string } }>,
+    reply: FastifyReply
+  ) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) throw new AppError("refreshToken obrigatório.", 400);
+    const result = await this.authService.refresh(refreshToken);
+    return reply.send({ ok: true, data: result });
+  };
 
-  return reply.send({ ok: true, data: user });
-};  
+  logout = async (
+    req: FastifyRequest<{ Body: { refreshToken?: string } }>,
+    reply: FastifyReply
+  ) => {
+    if (req.body.refreshToken) {
+      await this.authService.logout(req.body.refreshToken);
+    }
+    return reply.send({ ok: true });
+  };
+
+  me = async (req: FastifyRequest, reply: FastifyReply) => {
+    const user = await this.authService.getMe(req.user.userId);
+    return reply.send({ ok: true, data: user });
+  };
 }

@@ -1,24 +1,23 @@
-const KEY = "saas_rh_token"
-const EXPIRES_KEY = "saas_rh_token_expires"
-const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000
+const ACCESS_KEY  = "saas_rh_token"
+const REFRESH_KEY = "saas_rh_refresh_token"
 
 export const tokenStorage = {
   get: (): string | null => {
     if (typeof window === "undefined") return null
-    const expires = localStorage.getItem(EXPIRES_KEY)
-    if (expires && Date.now() > parseInt(expires, 10)) {
-      localStorage.removeItem(KEY)
-      localStorage.removeItem(EXPIRES_KEY)
-      return null
-    }
-    return localStorage.getItem(KEY)
+    return localStorage.getItem(ACCESS_KEY)
   },
   set: (token: string): void => {
-    localStorage.setItem(KEY, token)
-    localStorage.setItem(EXPIRES_KEY, String(Date.now() + TWO_DAYS_MS))
+    localStorage.setItem(ACCESS_KEY, token)
+  },
+  getRefresh: (): string | null => {
+    if (typeof window === "undefined") return null
+    return localStorage.getItem(REFRESH_KEY)
+  },
+  setRefresh: (token: string): void => {
+    localStorage.setItem(REFRESH_KEY, token)
   },
   clear: (): void => {
-    localStorage.removeItem(KEY)
-    localStorage.removeItem(EXPIRES_KEY)
+    localStorage.removeItem(ACCESS_KEY)
+    localStorage.removeItem(REFRESH_KEY)
   },
 }
