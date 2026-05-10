@@ -484,6 +484,26 @@ REDIS_URL=redis://localhost:6379
 
 ---
 
+
+# 28 Alta prioridade (core do produto)
+
+1	Chat Assistente de RH — chat contextual disponível em todas as telas com streaming	
+2	Tela de resultados para o candidato após concluir os testes (o candidato vê seu perfil)	
+3	Email com resultados em PDF para o candidato após completar os testes	
+4	Fluxo B — "Já Tenho Candidatos" — cadastro manual de candidatos com upload de CV, LinkedIn, transcrição de entrevista	
+5	Prompt de match usa contexto da empresa — atualmente só passa job + candidate, falta contextoEmpresa + perfilRitmo + valores
+
+
+
+# 29	
+6	LGPD consent — checkbox de aceite antes de iniciar os testes no portal
+7	Auto-save por questão no portal de testes (anti-perda por fechamento de aba)
+8	Endereço completo + ViaCEP na etapa 1 do onboarding (CEP → auto-preenche cidade/estado)
+9	Etapa 3 do onboarding funcional — hoje é só informativa; deveria ter "já tenho resultados" vs "enviar links para colaboradores"
+10	IA gera perguntas de triagem + perfil psicométrico ideal ao criar vaga com IA
+11	Plano de desenvolvimento no relatório de match (livros, cursos, evolução salarial)
+
+
 ## Visão Geral — Estimativa Fase 2
 
 | Etapa | Descrição                        | Complexidade | Tempo est. |

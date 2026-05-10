@@ -1,5 +1,5 @@
 import { api } from "@/lib/api"
-import type { ApiResponse, Job, CreateJobRequest, UpdateJobRequest } from "@/types/api"
+import type { ApiResponse, Job, CreateJobRequest, UpdateJobRequest, PerfilIdeal } from "@/types/api"
 
 export const jobService = {
   list: async (): Promise<Job[]> => {
@@ -29,6 +29,11 @@ export const jobService = {
 
   generateMatch: async (id: string, candidateId: string): Promise<unknown> => {
     const { data } = await api.post<ApiResponse<unknown>>(`/ai/jobs/${id}/match`, { candidateId })
+    return data.data
+  },
+
+  generatePerfilIdeal: async (id: string): Promise<PerfilIdeal> => {
+    const { data } = await api.post<ApiResponse<PerfilIdeal>>(`/ai/jobs/${id}/generate-perfil-ideal`)
     return data.data
   },
 }

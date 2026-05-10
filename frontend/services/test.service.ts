@@ -1,5 +1,10 @@
 import { api } from "@/lib/api"
-import type { ApiResponse, TestData, TestSubmitRequest } from "@/types/api"
+import type { ApiResponse, TestData, TestSubmitRequest, RespostasJson } from "@/types/api"
+
+interface SubmitResult {
+  ok: true
+  results: RespostasJson
+}
 
 export const testService = {
   getTest: async (token: string): Promise<TestData> => {
@@ -7,7 +12,8 @@ export const testService = {
     return data.data
   },
 
-  submit: async (token: string, answers: TestSubmitRequest): Promise<void> => {
-    await api.post(`/public/tests/${token}/submit`, answers)
+  submit: async (token: string, answers: TestSubmitRequest): Promise<RespostasJson> => {
+    const { data } = await api.post<SubmitResult>(`/public/tests/${token}/submit`, answers)
+    return data.results
   },
 }

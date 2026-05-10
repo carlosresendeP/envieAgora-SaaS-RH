@@ -92,11 +92,23 @@ export class TestService {
     // Invalida o token após uso
     await prisma.testLink.delete({ where: { id: link.id } });
 
-    // Notifica o RH
-    const hrUser = await prisma.user.findFirst({
+    // Envia resultados para o candidato e notifica RH em paralelo
+    const hrUserPromise = prisma.user.findFirst({
       where: { companyId: link.application.companyId },
       select: { email: true },
     });
+
+    const candidateEmailPromise = emailService.sendCandidateResults({
+      to: link.application.candidate.email,
+      candidateName: link.application.candidate.nome,
+      jobTitle: link.application.job.titulo,
+      disc: testResults.disc,
+      eneagrama: testResults.eneagrama,
+      personalities: testResults.personalities,
+    }).catch(() => null); // never block submission on email failure
+
+    const [hrUser] = await Promise.all([hrUserPromise, candidateEmailPromise]);
+
     if (hrUser) {
       await emailService.sendTestCompleted({
         to: hrUser.email,

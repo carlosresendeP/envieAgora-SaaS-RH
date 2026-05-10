@@ -22,6 +22,15 @@ model Company {
   valores          String[] // Array de strings para cultura
   logoUrl          String?
 
+  // Endereço
+  cep        String?
+  logradouro String?
+  cidade     String?
+  estado     String?
+
+  // Onboarding: e-mails de colaboradores para convite de mapeamento
+  teamEmails String[]
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

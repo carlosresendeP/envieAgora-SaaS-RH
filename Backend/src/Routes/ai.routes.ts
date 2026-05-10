@@ -25,4 +25,10 @@ export async function aiRoutes(app: FastifyInstance) {
     },
     aiController.match
   );
+
+  app.post<{ Params: { id: string } }>(
+    "/jobs/:id/generate-perfil-ideal",
+    { preHandler: [validateSchema(aiJobParamsSchema, "params")] },
+    aiController.generatePerfilIdeal
+  );
 }

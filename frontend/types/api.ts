@@ -63,6 +63,11 @@ export interface Company {
   perfilRitmo: string | null
   valores: string[]
   logoUrl: string | null
+  cep: string | null
+  logradouro: string | null
+  cidade: string | null
+  estado: string | null
+  teamEmails: string[]
   createdAt: string
   updatedAt: string
 }
@@ -74,6 +79,11 @@ export interface UpdateCompanyRequest {
   perfilRitmo?: string
   valores?: string[]
   logoUrl?: string
+  cep?: string
+  logradouro?: string
+  cidade?: string
+  estado?: string
+  teamEmails?: string[]
 }
 
 // ─── OrganogramaNode — modelo: OrganogramaNode ────────────────────────────────
@@ -105,7 +115,7 @@ export interface Job {
   status: JobStatus
   liderId: string | null
   jdGerada: string | null
-  perfilIdealJson: unknown
+  perfilIdealJson: PerfilIdeal | null
   publicToken: string | null
   salaryMin: string | null
   salaryMax: string | null
@@ -174,6 +184,7 @@ export interface ApplyRequest {
   email: string
   telefone?: string
   curriculoUrl?: string
+  linkedinUrl?: string
 }
 
 // ─── PersonalityResult — modelo: PersonalityResult ───────────────────────────
@@ -231,6 +242,7 @@ export interface MatchReport {
   matchComCultura: MatchCultura
   perguntasComplementares: string[]
   desafioPratico: DesafioPratico
+  planoDevelopment?: PlanoDevelopment
 }
 
 export interface PontoForte {
@@ -261,6 +273,21 @@ export interface DesafioPratico {
   descricao: string
   duracaoEstimada: string
   habilidadesAvaliadas: string[]
+}
+
+export interface PlanoDevelopment {
+  livros: { titulo: string; motivo: string }[]
+  cursos: { nome: string; plataforma: string; motivo: string }[]
+  evolucaoSalarial: string
+}
+
+export interface PerfilIdeal {
+  perguntasTriagem: string[]
+  perfilPsicometricoIdeal: {
+    disc: string
+    eneagrama: string
+    tracosPrincipais: string[]
+  }
 }
 
 // ─── Teste Psicométrico — portal público /teste/[token] ──────────────────────

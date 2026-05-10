@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { CompanyController } from "../controllers/CompanyController";
 import { authMiddleware } from "@/middleware/auth.middleware";
 import { validateSchema } from "@/middleware/validade.schema";
-import { UpdateCompanyDTO, updateCompanySchema } from "../schemas/company.schema";
+import { UpdateCompanyDTO, updateCompanySchema, TeamInviteDTO, teamInviteSchema } from "../schemas/company.schema";
 
 export async function companyRoutes(app: FastifyInstance) {
   const controller = new CompanyController();
@@ -20,6 +20,12 @@ export async function companyRoutes(app: FastifyInstance) {
   );
 
   app.patch("/onboarding/:step", controller.updateStep);
+
+  app.post<{ Body: TeamInviteDTO }>(
+    "/team-invite",
+    { preHandler: [validateSchema(teamInviteSchema)] },
+    controller.teamInvite
+  );
 
   app.get("/stats", controller.getStats);
 }

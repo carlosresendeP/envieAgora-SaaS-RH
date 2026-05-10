@@ -119,11 +119,12 @@ export default function PersonalidadesPage() {
 
     setIsSubmitting(true)
     try {
-      await testService.submit(token, { disc, eneagrama, personalities })
+      const results = await testService.submit(token, { disc, eneagrama, personalities })
 
       sessionStorage.removeItem(`disc_${token}`)
       sessionStorage.removeItem(`eneagrama_${token}`)
       sessionStorage.removeItem(`personalidades_${token}`)
+      sessionStorage.setItem(`test_results_${token}`, JSON.stringify(results))
 
       router.push(`/teste/${token}/concluido`)
     } catch {

@@ -1,40 +1,47 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, KeyboardEvent } from "react"
 import { toast } from "sonner"
-import { ArrowLeft, ArrowRight, Users, Brain, CheckCircle2 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Users, CheckCircle2, Mail, Plus, X, Loader2 } from "lucide-react"
 import { companyService } from "@/services/company.service"
+import { api } from "@/lib/api"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
-const BENEFITS = [
-  {
-    icon: Brain,
-    title: "Perfil DISC do time",
-    description:
-      "Cada colaborador responde um questionário de 15 minutos que mapeia seu perfil comportamental.",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Match cultural automático",
-    description:
-      "A IA compara o perfil de cada candidato com o DNA comportamental do seu time atual.",
-  },
-  {
-    icon: Users,
-    title: "Melhor retenção",
-    description:
-      "Contratações alinhadas com a cultura da equipe têm 3x mais chance de permanecer na empresa.",
-  },
-]
+type Option = "skip" | "invite"
 
 export default function Etapa3Page() {
   const router = useRouter()
+  const [selected, setSelected] = useState<Option | null>(null)
+  const [emails, setEmails] = useState<string[]>([])
+  const [emailInput, setEmailInput] = useState("")
   const [saving, setSaving] = useState(false)
 
+  function addEmail() {
+    const val = emailInput.trim().toLowerCase()
+    if (!val || emails.includes(val)) return
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      toast.error("E-mail inválido.")
+      return
+    }
+    setEmails((prev) => [...prev, val])
+    setEmailInput("")
+  }
+
+  function handleEmailKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") { e.preventDefault(); addEmail() }
+  }
+
   async function handleContinue() {
+    if (!selected) return
     setSaving(true)
     try {
+      if (selected === "invite" && emails.length > 0) {
+        await api.post("/company/team-invite", { emails })
+        toast.success(`${emails.length} convite(s) enviado(s)!`)
+      }
       await companyService.setOnboardingStep(4)
       router.push("/onboarding/etapa-4")
     } catch {
@@ -54,33 +61,99 @@ export default function Etapa3Page() {
           <h2 className="text-2xl font-bold text-foreground">Testes do Seu Time</h2>
         </div>
         <p className="text-muted-foreground text-sm mt-1">
-          Convide seus colaboradores para mapear o DNA comportamental da empresa. Isso
-          potencializa o match de candidatos futuros.
+          Mapeie o DNA comportamental da sua equipe para potencializar o match de candidatos futuros.
         </p>
       </div>
 
       <div className="px-8 pb-6 flex flex-col gap-4">
-        {BENEFITS.map((item) => {
-          const Icon = item.icon
-          return (
-            <div
-              key={item.title}
-              className="flex gap-4 p-4 rounded-lg border border-border bg-muted/30"
-            >
-              <div className="size-9 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                <Icon className="size-4 text-sidebar" />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground text-sm">{item.title}</p>
-                <p className="text-sm text-muted-foreground mt-0.5">{item.description}</p>
-              </div>
-            </div>
-          )
-        })}
+        {/* Option A */}
+        <button
+          type="button"
+          onClick={() => setSelected("skip")}
+          className={cn(
+            "flex gap-4 p-4 rounded-lg border-2 text-left transition-all",
+            selected === "skip"
+              ? "border-primary bg-primary/5"
+              : "border-border hover:border-primary/40 bg-muted/30"
+          )}
+        >
+          <div className="size-9 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
+            <CheckCircle2 className={cn("size-4", selected === "skip" ? "text-primary" : "text-muted-foreground")} />
+          </div>
+          <div>
+            <p className="font-semibold text-foreground text-sm">Já tenho os resultados do meu time</p>
+            <p className="text-sm text-muted-foreground mt-0.5">
+              Meu time já foi mapeado ou farei isso depois em <strong>Configurações → Time</strong>.
+            </p>
+          </div>
+        </button>
 
-        <p className="text-xs text-muted-foreground text-center mt-2">
-          Você pode convidar seu time depois, em <strong>Configurações → Time</strong>.
-        </p>
+        {/* Option B */}
+        <button
+          type="button"
+          onClick={() => setSelected("invite")}
+          className={cn(
+            "flex gap-4 p-4 rounded-lg border-2 text-left transition-all",
+            selected === "invite"
+              ? "border-primary bg-primary/5"
+              : "border-border hover:border-primary/40 bg-muted/30"
+          )}
+        >
+          <div className="size-9 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
+            <Mail className={cn("size-4", selected === "invite" ? "text-primary" : "text-muted-foreground")} />
+          </div>
+          <div>
+            <p className="font-semibold text-foreground text-sm">Quero enviar convites para meus colaboradores</p>
+            <p className="text-sm text-muted-foreground mt-0.5">
+              Envie links de mapeamento comportamental por e-mail agora mesmo.
+            </p>
+          </div>
+        </button>
+
+        {/* Email input — only when "invite" is selected */}
+        {selected === "invite" && (
+          <div className="flex flex-col gap-3 rounded-lg border border-border bg-background p-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              E-MAILS DOS COLABORADORES
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="colaborador@empresa.com"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                onKeyDown={handleEmailKeyDown}
+              />
+              <Button type="button" variant="outline" size="icon" onClick={addEmail}>
+                <Plus className="size-4" />
+              </Button>
+            </div>
+            {emails.length > 0 && (
+              <div className="flex flex-col gap-1">
+                {emails.map((email) => (
+                  <div
+                    key={email}
+                    className="flex items-center justify-between text-sm bg-muted/50 rounded px-3 py-1.5"
+                  >
+                    <span className="text-foreground">{email}</span>
+                    <button
+                      type="button"
+                      onClick={() => setEmails((prev) => prev.filter((e) => e !== email))}
+                      className="text-muted-foreground hover:text-destructive transition-colors"
+                    >
+                      <X className="size-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {emails.length === 0 && (
+              <p className="text-xs text-muted-foreground">
+                Adicione os e-mails e pressione Enter ou clique em +.
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="px-8 py-4 border-t border-border flex justify-between bg-muted/30">
@@ -92,9 +165,22 @@ export default function Etapa3Page() {
           <ArrowLeft className="size-4 mr-2" />
           Voltar
         </Button>
-        <Button type="button" onClick={handleContinue} disabled={saving}>
-          {saving ? "Salvando..." : "Continuar"}
-          <ArrowRight className="size-4 ml-2" />
+        <Button
+          type="button"
+          onClick={handleContinue}
+          disabled={!selected || saving || (selected === "invite" && emails.length === 0)}
+        >
+          {saving ? (
+            <>
+              <Loader2 className="size-4 mr-2 animate-spin" />
+              Enviando...
+            </>
+          ) : (
+            <>
+              {selected === "invite" ? "Enviar e Continuar" : "Continuar"}
+              <ArrowRight className="size-4 ml-2" />
+            </>
+          )}
         </Button>
       </div>
     </div>

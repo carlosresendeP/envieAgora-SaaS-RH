@@ -1,6 +1,7 @@
 import { prisma } from "@/config/prisma";
 import { AppError } from "@/config/error";
 import { UpdateCompanyDTO } from "../schemas/company.schema";
+import { emailService } from "./emailService";
 
 // Retorna a segunda-feira da semana de uma data (para agrupar por semana)
 function mondayOf(date: Date): string {
@@ -18,7 +19,6 @@ export class CompanyService {
   }
 
   async update(id: string, data: UpdateCompanyDTO) {
-    // O Prisma agora reconhece os tipos automaticamente através do DTO
     return await prisma.company.update({
       where: { id },
       data: {
@@ -29,8 +29,32 @@ export class CompanyService {
         perfilRitmo: data.perfilRitmo,
         valores: data.valores,
         logoUrl: data.logoUrl,
+        cep: data.cep,
+        logradouro: data.logradouro,
+        cidade: data.cidade,
+        estado: data.estado,
+        teamEmails: data.teamEmails,
       },
     });
+  }
+
+  async sendTeamInvites(companyId: string, emails: string[]) {
+    const company = await prisma.company.findUnique({ where: { id: companyId } });
+    if (!company) throw new AppError("Empresa não encontrada", 404);
+
+    await prisma.company.update({
+      where: { id: companyId },
+      data: { teamEmails: emails },
+    });
+
+    const companyName = company.nome ?? company.razaoSocial;
+    await Promise.allSettled(
+      emails.map((email) =>
+        emailService.sendTeamInvite({ to: email, companyName })
+      )
+    );
+
+    return { sent: emails.length };
   }
 
   async updateStep(id: string, step: number) {

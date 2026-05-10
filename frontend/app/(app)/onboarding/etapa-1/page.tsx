@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
-import { Building2, Upload, Loader2, ArrowRight, X } from "lucide-react"
+import { Building2, Upload, Loader2, ArrowRight, X, MapPin } from "lucide-react"
 import { companyService } from "@/services/company.service"
 import { publicService } from "@/services/public.service"
 import { Input } from "@/components/ui/input"
@@ -15,12 +15,30 @@ import { Button } from "@/components/ui/button"
 interface Fields {
   nome: string
   logoUrl: string
+  cep: string
+  logradouro: string
+  cidade: string
+  estado: string
+}
+
+async function fetchViaCep(cep: string) {
+  const digits = cep.replace(/\D/g, "")
+  if (digits.length !== 8) return null
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`)
+    const data = await res.json()
+    if (data.erro) return null
+    return data as { logradouro: string; localidade: string; uf: string }
+  } catch {
+    return null
+  }
 }
 
 export default function Etapa1Page() {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isUploading, setIsUploading] = useState(false)
+  const [isFetchingCep, setIsFetchingCep] = useState(false)
 
   const { data: company } = useQuery({
     queryKey: ["company"],
@@ -37,6 +55,10 @@ export default function Etapa1Page() {
     values: {
       nome: company?.nome ?? "",
       logoUrl: company?.logoUrl ?? "",
+      cep: company?.cep ?? "",
+      logradouro: company?.logradouro ?? "",
+      cidade: company?.cidade ?? "",
+      estado: company?.estado ?? "",
     },
   })
 
@@ -58,11 +80,33 @@ export default function Etapa1Page() {
     }
   }
 
+  async function handleCepBlur(e: React.FocusEvent<HTMLInputElement>) {
+    const cep = e.target.value
+    if (cep.replace(/\D/g, "").length !== 8) return
+    setIsFetchingCep(true)
+    try {
+      const result = await fetchViaCep(cep)
+      if (result) {
+        setValue("logradouro", result.logradouro)
+        setValue("cidade", result.localidade)
+        setValue("estado", result.uf)
+      } else {
+        toast.error("CEP não encontrado.")
+      }
+    } finally {
+      setIsFetchingCep(false)
+    }
+  }
+
   async function onSubmit(values: Fields) {
     try {
       await companyService.update({
         ...(values.nome.trim() && { nome: values.nome.trim() }),
         ...(values.logoUrl.trim() && { logoUrl: values.logoUrl.trim() }),
+        ...(values.cep.trim() && { cep: values.cep.replace(/\D/g, "") }),
+        ...(values.logradouro.trim() && { logradouro: values.logradouro.trim() }),
+        ...(values.cidade.trim() && { cidade: values.cidade.trim() }),
+        ...(values.estado.trim() && { estado: values.estado.trim() }),
       })
       await companyService.setOnboardingStep(2)
       router.push("/onboarding/etapa-2")
@@ -160,6 +204,49 @@ export default function Etapa1Page() {
               {isUploading ? "Enviando..." : "Fazer upload do logotipo"}
             </Button>
           )}
+        </div>
+
+        {/* Endereço */}
+        <div className="flex flex-col gap-3">
+          <Label className="text-xs uppercase tracking-widest text-muted-foreground">
+            ENDEREÇO <span className="normal-case tracking-normal">(opcional)</span>
+          </Label>
+
+          {/* CEP */}
+          <div className="relative">
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+            {isFetchingCep && (
+              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground animate-spin" />
+            )}
+            <Input
+              placeholder="CEP (somente números)"
+              className="pl-10"
+              maxLength={9}
+              {...register("cep")}
+              onBlur={handleCepBlur}
+            />
+          </div>
+
+          {/* Logradouro */}
+          <Input
+            placeholder="Logradouro"
+            {...register("logradouro")}
+          />
+
+          {/* Cidade + Estado */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="col-span-2">
+              <Input
+                placeholder="Cidade"
+                {...register("cidade")}
+              />
+            </div>
+            <Input
+              placeholder="UF"
+              maxLength={2}
+              {...register("estado")}
+            />
+          </div>
         </div>
       </div>
 

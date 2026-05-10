@@ -20,4 +20,12 @@ export class AiController {
     const data = await this.service.generateMatch(req.params.id, req.body.candidateId);
     return reply.send({ ok: true, data });
   };
+
+  generatePerfilIdeal = async (
+    req: FastifyRequest<{ Params: { id: string } }>,
+    reply: FastifyReply
+  ) => {
+    const data = await this.service.generatePerfilIdeal(req.params.id);
+    return reply.send({ ok: true, data });
+  };
 }

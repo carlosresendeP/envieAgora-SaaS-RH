@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
-import { ChevronLeft, Sparkles } from "lucide-react"
+import { ChevronLeft, Sparkles, HelpCircle, Brain } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -13,16 +13,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
 import { JdPreview } from "@/components/vagas/JdPreview"
 import { jobService } from "@/services/job.service"
 import { organogramaService } from "@/services/organograma.service"
 import { createJobSchema, type CreateJobFormValues } from "@/lib/validations/job"
+import type { PerfilIdeal } from "@/types/api"
 
 export default function NovaVagaComIaPage() {
   const router = useRouter()
   const [step, setStep] = useState<"form" | "preview">("form")
   const [jobId, setJobId] = useState<string | null>(null)
   const [jdContent, setJdContent] = useState("")
+  const [perfilIdeal, setPerfilIdeal] = useState<PerfilIdeal | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -52,8 +55,14 @@ export default function NovaVagaComIaPage() {
         status: "ABERTA",
       })
       setJobId(job.id)
-      const jd = await jobService.generateJd(job.id)
+
+      const [jd, perfil] = await Promise.all([
+        jobService.generateJd(job.id),
+        jobService.generatePerfilIdeal(job.id).catch(() => null),
+      ])
+
       setJdContent(jd)
+      setPerfilIdeal(perfil)
       setStep("preview")
     } catch (err: unknown) {
       const msg =
@@ -97,6 +106,59 @@ export default function NovaVagaComIaPage() {
         </div>
 
         <JdPreview value={jdContent} onChange={setJdContent} isGenerated />
+
+        {/* Perfil Ideal gerado */}
+        {perfilIdeal && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Perguntas de Triagem */}
+            <div className="rounded-xl border border-secondary/40 p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="size-4 text-sidebar" />
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                  Perguntas de Triagem
+                </p>
+              </div>
+              <ol className="space-y-2">
+                {perfilIdeal.perguntasTriagem.map((q, i) => (
+                  <li key={i} className="flex gap-2 text-sm">
+                    <span className="text-sidebar font-bold shrink-0">{i + 1}.</span>
+                    <span className="text-muted-foreground">{q}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Perfil Psicométrico Ideal */}
+            <div className="rounded-xl border border-secondary/40 p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Brain className="size-4 text-sidebar" />
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                  Perfil Psicométrico Ideal
+                </p>
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <span className="text-xs font-semibold">DISC: </span>
+                  <span className="text-xs text-muted-foreground">{perfilIdeal.perfilPsicometricoIdeal.disc}</span>
+                </div>
+                <div>
+                  <span className="text-xs font-semibold">Eneagrama: </span>
+                  <span className="text-xs text-muted-foreground">{perfilIdeal.perfilPsicometricoIdeal.eneagrama}</span>
+                </div>
+                <div className="pt-1">
+                  <p className="text-xs font-semibold mb-1.5">Traços Principais</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {perfilIdeal.perfilPsicometricoIdeal.tracosPrincipais.map((t, i) => (
+                      <Badge key={i} variant="secondary" className="text-xs">
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="flex justify-end gap-3">
           <Button variant="outline" onClick={() => setStep("form")}>
@@ -182,9 +244,9 @@ export default function NovaVagaComIaPage() {
               <Sparkles className="size-6 text-sidebar" />
             </div>
             <div>
-              <p className="font-bold text-foreground">Descrição Mágica</p>
+              <p className="font-bold text-foreground">Descrição + Perfil Ideal</p>
               <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed max-w-[220px]">
-                Após preencher o briefing, a IA irá gerar uma descrição profissional baseada nas informações fornecidas.
+                A IA gera a descrição da vaga, perguntas de triagem e o perfil psicométrico ideal.
               </p>
             </div>
           </div>
@@ -200,7 +262,7 @@ export default function NovaVagaComIaPage() {
             className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
             <Sparkles className="size-4 mr-2" />
-            {isGenerating ? "Gerando descrição..." : "Gerar Descrição com IA"}
+            {isGenerating ? "Gerando..." : "Gerar com IA"}
           </Button>
         </div>
       </form>

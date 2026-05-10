@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CompanyService } from "../services/CompanyService";
-import { UpdateCompanyDTO } from "../schemas/company.schema";
+import { UpdateCompanyDTO, TeamInviteDTO } from "../schemas/company.schema";
 import { AppError } from "@/config/error";
 
 export class CompanyController {
@@ -23,6 +23,14 @@ export class CompanyController {
 
   getStats = async (req: FastifyRequest, reply: FastifyReply) => {
     const data = await this.companyService.getStats(req.user.companyId);
+    return reply.send({ ok: true, data });
+  };
+
+  teamInvite = async (
+    req: FastifyRequest<{ Body: TeamInviteDTO }>,
+    reply: FastifyReply
+  ) => {
+    const data = await this.companyService.sendTeamInvites(req.user.companyId, req.body.emails);
     return reply.send({ ok: true, data });
   };
 

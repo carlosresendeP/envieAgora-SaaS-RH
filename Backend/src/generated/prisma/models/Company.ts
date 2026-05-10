@@ -43,6 +43,10 @@ export type CompanyMinAggregateOutputType = {
   contextoEmpresa: string | null
   perfilRitmo: string | null
   logoUrl: string | null
+  cep: string | null
+  logradouro: string | null
+  cidade: string | null
+  estado: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +60,10 @@ export type CompanyMaxAggregateOutputType = {
   contextoEmpresa: string | null
   perfilRitmo: string | null
   logoUrl: string | null
+  cep: string | null
+  logradouro: string | null
+  cidade: string | null
+  estado: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +78,11 @@ export type CompanyCountAggregateOutputType = {
   perfilRitmo: number
   valores: number
   logoUrl: number
+  cep: number
+  logradouro: number
+  cidade: number
+  estado: number
+  teamEmails: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +106,10 @@ export type CompanyMinAggregateInputType = {
   contextoEmpresa?: true
   perfilRitmo?: true
   logoUrl?: true
+  cep?: true
+  logradouro?: true
+  cidade?: true
+  estado?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +123,10 @@ export type CompanyMaxAggregateInputType = {
   contextoEmpresa?: true
   perfilRitmo?: true
   logoUrl?: true
+  cep?: true
+  logradouro?: true
+  cidade?: true
+  estado?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +141,11 @@ export type CompanyCountAggregateInputType = {
   perfilRitmo?: true
   valores?: true
   logoUrl?: true
+  cep?: true
+  logradouro?: true
+  cidade?: true
+  estado?: true
+  teamEmails?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -221,6 +247,11 @@ export type CompanyGroupByOutputType = {
   perfilRitmo: string | null
   valores: string[]
   logoUrl: string | null
+  cep: string | null
+  logradouro: string | null
+  cidade: string | null
+  estado: string | null
+  teamEmails: string[]
   createdAt: Date
   updatedAt: Date
   _count: CompanyCountAggregateOutputType | null
@@ -258,6 +289,11 @@ export type CompanyWhereInput = {
   perfilRitmo?: Prisma.StringNullableFilter<"Company"> | string | null
   valores?: Prisma.StringNullableListFilter<"Company">
   logoUrl?: Prisma.StringNullableFilter<"Company"> | string | null
+  cep?: Prisma.StringNullableFilter<"Company"> | string | null
+  logradouro?: Prisma.StringNullableFilter<"Company"> | string | null
+  cidade?: Prisma.StringNullableFilter<"Company"> | string | null
+  estado?: Prisma.StringNullableFilter<"Company"> | string | null
+  teamEmails?: Prisma.StringNullableListFilter<"Company">
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -276,6 +312,11 @@ export type CompanyOrderByWithRelationInput = {
   perfilRitmo?: Prisma.SortOrderInput | Prisma.SortOrder
   valores?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  cep?: Prisma.SortOrderInput | Prisma.SortOrder
+  logradouro?: Prisma.SortOrderInput | Prisma.SortOrder
+  cidade?: Prisma.SortOrderInput | Prisma.SortOrder
+  estado?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamEmails?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
@@ -297,6 +338,11 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   perfilRitmo?: Prisma.StringNullableFilter<"Company"> | string | null
   valores?: Prisma.StringNullableListFilter<"Company">
   logoUrl?: Prisma.StringNullableFilter<"Company"> | string | null
+  cep?: Prisma.StringNullableFilter<"Company"> | string | null
+  logradouro?: Prisma.StringNullableFilter<"Company"> | string | null
+  cidade?: Prisma.StringNullableFilter<"Company"> | string | null
+  estado?: Prisma.StringNullableFilter<"Company"> | string | null
+  teamEmails?: Prisma.StringNullableListFilter<"Company">
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -315,6 +361,11 @@ export type CompanyOrderByWithAggregationInput = {
   perfilRitmo?: Prisma.SortOrderInput | Prisma.SortOrder
   valores?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  cep?: Prisma.SortOrderInput | Prisma.SortOrder
+  logradouro?: Prisma.SortOrderInput | Prisma.SortOrder
+  cidade?: Prisma.SortOrderInput | Prisma.SortOrder
+  estado?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamEmails?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CompanyCountOrderByAggregateInput
@@ -337,6 +388,11 @@ export type CompanyScalarWhereWithAggregatesInput = {
   perfilRitmo?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   valores?: Prisma.StringNullableListFilter<"Company">
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  cep?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  logradouro?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  cidade?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  estado?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  teamEmails?: Prisma.StringNullableListFilter<"Company">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Company"> | Date | string
 }
@@ -351,6 +407,11 @@ export type CompanyCreateInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
@@ -369,6 +430,11 @@ export type CompanyUncheckedCreateInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -387,6 +453,11 @@ export type CompanyUpdateInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
@@ -405,6 +476,11 @@ export type CompanyUncheckedUpdateInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
@@ -423,6 +499,11 @@ export type CompanyCreateManyInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -437,6 +518,11 @@ export type CompanyUpdateManyMutationInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -451,6 +537,11 @@ export type CompanyUncheckedUpdateManyInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -473,6 +564,11 @@ export type CompanyCountOrderByAggregateInput = {
   perfilRitmo?: Prisma.SortOrder
   valores?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
+  cep?: Prisma.SortOrder
+  logradouro?: Prisma.SortOrder
+  cidade?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
+  teamEmails?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -490,6 +586,10 @@ export type CompanyMaxOrderByAggregateInput = {
   contextoEmpresa?: Prisma.SortOrder
   perfilRitmo?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
+  cep?: Prisma.SortOrder
+  logradouro?: Prisma.SortOrder
+  cidade?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -503,6 +603,10 @@ export type CompanyMinOrderByAggregateInput = {
   contextoEmpresa?: Prisma.SortOrder
   perfilRitmo?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
+  cep?: Prisma.SortOrder
+  logradouro?: Prisma.SortOrder
+  cidade?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -517,6 +621,10 @@ export type CompanyScalarRelationFilter = {
 }
 
 export type CompanyCreatevaloresInput = {
+  set: string[]
+}
+
+export type CompanyCreateteamEmailsInput = {
   set: string[]
 }
 
@@ -537,6 +645,11 @@ export type IntFieldUpdateOperationsInput = {
 }
 
 export type CompanyUpdatevaloresInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type CompanyUpdateteamEmailsInput = {
   set?: string[]
   push?: string | string[]
 }
@@ -611,6 +724,11 @@ export type CompanyCreateWithoutUsersInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobCreateNestedManyWithoutCompanyInput
@@ -628,6 +746,11 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutCompanyInput
@@ -661,6 +784,11 @@ export type CompanyUpdateWithoutUsersInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUpdateManyWithoutCompanyNestedInput
@@ -678,6 +806,11 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutCompanyNestedInput
@@ -695,6 +828,11 @@ export type CompanyCreateWithoutJobsInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
@@ -712,6 +850,11 @@ export type CompanyUncheckedCreateWithoutJobsInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -745,6 +888,11 @@ export type CompanyUpdateWithoutJobsInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
@@ -762,6 +910,11 @@ export type CompanyUncheckedUpdateWithoutJobsInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
@@ -779,6 +932,11 @@ export type CompanyCreateWithoutApplicationsInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
@@ -796,6 +954,11 @@ export type CompanyUncheckedCreateWithoutApplicationsInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -829,6 +992,11 @@ export type CompanyUpdateWithoutApplicationsInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
@@ -846,6 +1014,11 @@ export type CompanyUncheckedUpdateWithoutApplicationsInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
@@ -863,6 +1036,11 @@ export type CompanyCreateWithoutOrganogramaInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
@@ -880,6 +1058,11 @@ export type CompanyUncheckedCreateWithoutOrganogramaInput = {
   perfilRitmo?: string | null
   valores?: Prisma.CompanyCreatevaloresInput | string[]
   logoUrl?: string | null
+  cep?: string | null
+  logradouro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  teamEmails?: Prisma.CompanyCreateteamEmailsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -913,6 +1096,11 @@ export type CompanyUpdateWithoutOrganogramaInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
@@ -930,6 +1118,11 @@ export type CompanyUncheckedUpdateWithoutOrganogramaInput = {
   perfilRitmo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valores?: Prisma.CompanyUpdatevaloresInput | string[]
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logradouro?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cidade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamEmails?: Prisma.CompanyUpdateteamEmailsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1005,6 +1198,11 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   perfilRitmo?: boolean
   valores?: boolean
   logoUrl?: boolean
+  cep?: boolean
+  logradouro?: boolean
+  cidade?: boolean
+  estado?: boolean
+  teamEmails?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
@@ -1024,6 +1222,11 @@ export type CompanySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   perfilRitmo?: boolean
   valores?: boolean
   logoUrl?: boolean
+  cep?: boolean
+  logradouro?: boolean
+  cidade?: boolean
+  estado?: boolean
+  teamEmails?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["company"]>
@@ -1038,6 +1241,11 @@ export type CompanySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   perfilRitmo?: boolean
   valores?: boolean
   logoUrl?: boolean
+  cep?: boolean
+  logradouro?: boolean
+  cidade?: boolean
+  estado?: boolean
+  teamEmails?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["company"]>
@@ -1052,11 +1260,16 @@ export type CompanySelectScalar = {
   perfilRitmo?: boolean
   valores?: boolean
   logoUrl?: boolean
+  cep?: boolean
+  logradouro?: boolean
+  cidade?: boolean
+  estado?: boolean
+  teamEmails?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "razaoSocial" | "cnpj" | "onboardingStep" | "contextoEmpresa" | "perfilRitmo" | "valores" | "logoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "razaoSocial" | "cnpj" | "onboardingStep" | "contextoEmpresa" | "perfilRitmo" | "valores" | "logoUrl" | "cep" | "logradouro" | "cidade" | "estado" | "teamEmails" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   jobs?: boolean | Prisma.Company$jobsArgs<ExtArgs>
@@ -1085,6 +1298,11 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     perfilRitmo: string | null
     valores: string[]
     logoUrl: string | null
+    cep: string | null
+    logradouro: string | null
+    cidade: string | null
+    estado: string | null
+    teamEmails: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["company"]>
@@ -1523,6 +1741,11 @@ export interface CompanyFieldRefs {
   readonly perfilRitmo: Prisma.FieldRef<"Company", 'String'>
   readonly valores: Prisma.FieldRef<"Company", 'String[]'>
   readonly logoUrl: Prisma.FieldRef<"Company", 'String'>
+  readonly cep: Prisma.FieldRef<"Company", 'String'>
+  readonly logradouro: Prisma.FieldRef<"Company", 'String'>
+  readonly cidade: Prisma.FieldRef<"Company", 'String'>
+  readonly estado: Prisma.FieldRef<"Company", 'String'>
+  readonly teamEmails: Prisma.FieldRef<"Company", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Company", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Company", 'DateTime'>
 }

@@ -1127,6 +1127,11 @@ export const CompanyScalarFieldEnum = {
   perfilRitmo: 'perfilRitmo',
   valores: 'valores',
   logoUrl: 'logoUrl',
+  cep: 'cep',
+  logradouro: 'logradouro',
+  cidade: 'cidade',
+  estado: 'estado',
+  teamEmails: 'teamEmails',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Sparkles } from "lucide-react"
+import { Sparkles, BookOpen, GraduationCap, TrendingUp } from "lucide-react"
 import type { Application, MatchReport } from "@/types/api"
 
 interface CandidateAnalysisProps {
@@ -42,9 +42,23 @@ export function CandidateAnalysis({ application, onGenerateMatch, isGenerating }
           </p>
           <p className="text-4xl font-bold tabular-nums text-primary">{report.matchScore}%</p>
         </div>
-        <Badge variant="outline" className="border-primary/40 text-primary text-xs font-bold px-3 py-1">
-          #{report.rankingPosition}° no ranking
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="border-primary/40 text-primary text-xs font-bold px-3 py-1">
+            #{report.rankingPosition}° no ranking
+          </Badge>
+          {onGenerateMatch && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={onGenerateMatch}
+              disabled={isGenerating}
+              className="text-xs gap-1.5 h-7 px-2"
+            >
+              <Sparkles className="size-3" />
+              {isGenerating ? "Gerando..." : "Regenerar"}
+            </Button>
+          )}
+        </div>
       </div>
 
       <Card className="border-secondary/40">
@@ -176,6 +190,62 @@ export function CandidateAnalysis({ application, onGenerateMatch, isGenerating }
                     {h}
                   </span>
                 ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {report.planoDevelopment && (
+        <Card className="border-secondary/40">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-bold uppercase tracking-widest">Plano de Desenvolvimento</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {report.planoDevelopment.livros?.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <BookOpen className="size-3.5 text-sidebar" />
+                  <p className="text-xs font-semibold">Leituras Recomendadas</p>
+                </div>
+                <div className="space-y-1.5">
+                  {report.planoDevelopment.livros.map((livro, i) => (
+                    <div key={i}>
+                      <p className="text-xs font-medium">{livro.titulo}</p>
+                      <p className="text-xs text-muted-foreground">{livro.motivo}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {report.planoDevelopment.cursos?.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <GraduationCap className="size-3.5 text-sidebar" />
+                  <p className="text-xs font-semibold">Cursos Sugeridos</p>
+                </div>
+                <div className="space-y-1.5">
+                  {report.planoDevelopment.cursos.map((curso, i) => (
+                    <div key={i}>
+                      <p className="text-xs font-medium">
+                        {curso.nome}{" "}
+                        <span className="text-muted-foreground font-normal">— {curso.plataforma}</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground">{curso.motivo}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {report.planoDevelopment.evolucaoSalarial && (
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-1.5">
+                  <TrendingUp className="size-3.5 text-sidebar" />
+                  <p className="text-xs font-semibold">Projeção Salarial</p>
+                </div>
+                <p className="text-xs text-muted-foreground">{report.planoDevelopment.evolucaoSalarial}</p>
               </div>
             )}
           </CardContent>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
@@ -9,11 +9,15 @@ import { z } from "zod"
 import {
   ChevronLeft,
   Copy,
+  HelpCircle,
+  Brain,
   Link2,
   Pencil,
   SendHorizonal,
   User,
+  UserPlus,
   Users,
+  X,
 } from "lucide-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -44,6 +48,7 @@ import { useJobApplications } from "@/hooks/useApplications"
 import { useOrganograma } from "@/hooks/useOrganograma"
 import { jobService } from "@/services/job.service"
 import { applicationService } from "@/services/application.service"
+import { candidateService } from "@/services/candidate.service"
 import { cn } from "@/lib/utils"
 import type { Application, Job, JobStatus } from "@/types/api"
 
@@ -252,6 +257,113 @@ function EditJobSheet({
   )
 }
 
+// ─── Add candidate schema ─────────────────────────────────────────────────────
+
+const addCandidateSchema = z.object({
+  nome:         z.string().min(3, "Mínimo 3 caracteres"),
+  email:        z.string().email("E-mail inválido"),
+  telefone:     z.string().optional(),
+  curriculoUrl: z.string().url("URL inválida").optional().or(z.literal("")),
+  linkedinUrl:  z.string().url("URL inválida").optional().or(z.literal("")),
+})
+
+type AddCandidateForm = z.infer<typeof addCandidateSchema>
+
+function AddCandidateSheet({
+  jobId,
+  open,
+  onClose,
+}: {
+  jobId: string
+  open: boolean
+  onClose: () => void
+}) {
+  const queryClient = useQueryClient()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AddCandidateForm>({ resolver: zodResolver(addCandidateSchema) })
+
+  const addMutation = useMutation({
+    mutationFn: (data: AddCandidateForm) =>
+      candidateService.apply({
+        jobId,
+        nome:         data.nome,
+        email:        data.email,
+        telefone:     data.telefone || undefined,
+        curriculoUrl: data.curriculoUrl || undefined,
+        linkedinUrl:  data.linkedinUrl || undefined,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["applications", "job", jobId] })
+      toast.success("Candidato adicionado com sucesso!")
+      reset()
+      onClose()
+    },
+    onError: (err: { response?: { data?: { error?: string } } }) => {
+      const msg = err?.response?.data?.error ?? "Erro ao adicionar candidato."
+      toast.error(msg)
+    },
+  })
+
+  return (
+    <Sheet open={open} onOpenChange={(v) => { if (!v) { reset(); onClose() } }}>
+      <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+        <SheetHeader className="mb-6">
+          <SheetTitle>Adicionar Candidato Manualmente</SheetTitle>
+        </SheetHeader>
+
+        <form onSubmit={handleSubmit((d) => addMutation.mutate(d))} className="space-y-4 px-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="add-nome">Nome completo *</Label>
+            <Input id="add-nome" placeholder="Ex: João Silva" {...register("nome")} />
+            {errors.nome && <p className="text-xs text-destructive">{errors.nome.message}</p>}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="add-email">E-mail *</Label>
+            <Input id="add-email" type="email" placeholder="candidato@email.com" {...register("email")} />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="add-telefone">Telefone</Label>
+            <Input id="add-telefone" placeholder="(11) 99999-9999" {...register("telefone")} />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="add-curriculo">URL do Currículo (PDF)</Label>
+            <Input id="add-curriculo" placeholder="https://..." {...register("curriculoUrl")} />
+            {errors.curriculoUrl && <p className="text-xs text-destructive">{errors.curriculoUrl.message}</p>}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="add-linkedin">LinkedIn</Label>
+            <Input id="add-linkedin" placeholder="https://linkedin.com/in/..." {...register("linkedinUrl")} />
+            {errors.linkedinUrl && <p className="text-xs text-destructive">{errors.linkedinUrl.message}</p>}
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <Button
+              type="submit"
+              disabled={addMutation.isPending}
+              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {addMutation.isPending ? "Adicionando..." : "Adicionar Candidato"}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => { reset(); onClose() }}>
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
 // ─── Skeleton ─────────────────────────────────────────────────────────────────
 
 function PageSkeleton() {
@@ -277,6 +389,19 @@ export default function VagaDetailPage() {
   const [selectedApp, setSelectedApp] = useState<Application | null>(null)
   const [testLinks, setTestLinks] = useState<Record<string, string>>({})
   const [editOpen, setEditOpen] = useState(false)
+  const [addCandidateOpen, setAddCandidateOpen] = useState(false)
+  const analysisRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!selectedApp) return
+    function onMouseDown(e: MouseEvent) {
+      if (analysisRef.current && !analysisRef.current.contains(e.target as Node)) {
+        setSelectedApp(null)
+      }
+    }
+    document.addEventListener("mousedown", onMouseDown)
+    return () => document.removeEventListener("mousedown", onMouseDown)
+  }, [selectedApp])
 
   const { data: job, isLoading: jobLoading } = useJob(id)
   const { data: applications = [], isLoading: appsLoading } = useJobApplications(id)
@@ -359,6 +484,17 @@ export default function VagaDetailPage() {
             Editar
           </Button>
 
+          {/* Adicionar candidato manualmente */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAddCandidateOpen(true)}
+            className="gap-2"
+          >
+            <UserPlus className="size-4" />
+            Adicionar Candidato
+          </Button>
+
           {/* Link público de candidatura */}
           {publicUrl && (
             <Button
@@ -405,48 +541,53 @@ export default function VagaDetailPage() {
             </Card>
           )}
 
-          {selectedApp && (
-            <Card className="border-secondary/40 shadow-sm">
-              <CardHeader className="pb-2 flex-row items-center justify-between">
-                <CardTitle className="text-xs font-bold uppercase tracking-widest">
-                  Análise — {selectedApp.candidate?.nome ?? "Candidato"}
-                </CardTitle>
-                <div className="flex items-center gap-2">
-                  {testLinks[selectedApp.id] ? (
-                    <button
-                      onClick={() => copyToClipboard(testLinks[selectedApp.id], "Link do teste")}
-                      className="flex items-center gap-1 text-xs text-sidebar hover:underline"
-                    >
-                      <Copy className="size-3" />
-                      Copiar link do teste
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => generateTestLinkMutation.mutate(selectedApp.id)}
-                      disabled={generateTestLinkMutation.isPending}
-                      className="flex items-center gap-1 text-xs text-sidebar hover:underline disabled:opacity-50"
-                    >
-                      <SendHorizonal className="size-3" />
-                      {generateTestLinkMutation.isPending ? "Gerando..." : "Gerar link de teste"}
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setSelectedApp(null)}
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors ml-2"
-                  >
-                    Fechar ×
-                  </button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CandidateAnalysis
-                  application={selectedApp}
-                  onGenerateMatch={() => generateMatchMutation.mutate()}
-                  isGenerating={generateMatchMutation.isPending}
-                />
-              </CardContent>
-            </Card>
+          {job.perfilIdealJson && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card className="border-secondary/40 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    <HelpCircle className="size-3.5 text-sidebar" />
+                    Perguntas de Triagem
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ol className="space-y-2">
+                    {job.perfilIdealJson.perguntasTriagem.map((q, i) => (
+                      <li key={i} className="flex gap-2 text-xs">
+                        <span className="text-sidebar font-bold shrink-0">{i + 1}.</span>
+                        <span className="text-muted-foreground">{q}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </CardContent>
+              </Card>
+
+              <Card className="border-secondary/40 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    <Brain className="size-3.5 text-sidebar" />
+                    Perfil Psicométrico Ideal
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div>
+                    <span className="text-xs font-semibold">DISC: </span>
+                    <span className="text-xs text-muted-foreground">{job.perfilIdealJson.perfilPsicometricoIdeal.disc}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold">Eneagrama: </span>
+                    <span className="text-xs text-muted-foreground">{job.perfilIdealJson.perfilPsicometricoIdeal.eneagrama}</span>
+                  </div>
+                  <div className="pt-1 flex flex-wrap gap-1.5">
+                    {job.perfilIdealJson.perfilPsicometricoIdeal.tracosPrincipais.map((t, i) => (
+                      <Badge key={i} variant="secondary" className="text-[10px]">{t}</Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           )}
+
         </div>
 
         {/* Right — ranking sidebar */}
@@ -457,6 +598,13 @@ export default function VagaDetailPage() {
               Candidatos ({applications.length})
             </CardTitle>
           </CardHeader>
+          {applications.length > 0 && (
+            <div className="px-4 pb-1">
+              <p className="text-[11px] text-muted-foreground bg-muted/60 rounded-lg px-3 py-2 text-center leading-relaxed">
+                Clique sobre o candidato para gerar uma análise de IA
+              </p>
+            </div>
+          )}
           <CardContent className="px-3 pb-3">
             <RankingSidebar
               applications={applications}
@@ -467,8 +615,66 @@ export default function VagaDetailPage() {
         </Card>
       </div>
 
-      {/* Edit sheet — mounted only when job exists */}
+      {/* Edit sheet */}
       <EditJobSheet job={job} open={editOpen} onClose={() => setEditOpen(false)} />
+
+      {/* Add candidate sheet */}
+      <AddCandidateSheet jobId={id} open={addCandidateOpen} onClose={() => setAddCandidateOpen(false)} />
+
+      {/* Floating analysis panel — appears over left content, sidebar stays visible */}
+      {selectedApp && (
+        <div
+          ref={analysisRef}
+          className="fixed top-0 left-0 bottom-0 z-50 w-full lg:w-[65vw] bg-background border-r border-border shadow-2xl flex flex-col"
+        >
+          {/* Sticky header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0 bg-background">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-0.5">
+                Análise de Candidatura
+              </p>
+              <h3 className="font-bold text-base leading-tight">
+                {selectedApp.candidate?.nome ?? "Candidato"}
+              </h3>
+            </div>
+            <div className="flex items-center gap-3">
+              {testLinks[selectedApp.id] ? (
+                <button
+                  onClick={() => copyToClipboard(testLinks[selectedApp.id], "Link do teste")}
+                  className="flex items-center gap-1.5 text-xs text-sidebar hover:underline"
+                >
+                  <Copy className="size-3.5" />
+                  Copiar link do teste
+                </button>
+              ) : (
+                <button
+                  onClick={() => generateTestLinkMutation.mutate(selectedApp.id)}
+                  disabled={generateTestLinkMutation.isPending}
+                  className="flex items-center gap-1.5 text-xs text-sidebar hover:underline disabled:opacity-50"
+                >
+                  <SendHorizonal className="size-3.5" />
+                  {generateTestLinkMutation.isPending ? "Gerando..." : "Gerar link de teste"}
+                </button>
+              )}
+              <button
+                onClick={() => setSelectedApp(null)}
+                className="size-8 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Scrollable content */}
+          <div className="flex-1 overflow-y-auto px-6 py-5">
+            <CandidateAnalysis
+              application={selectedApp}
+              onGenerateMatch={() => generateMatchMutation.mutate()}
+              isGenerating={generateMatchMutation.isPending}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
