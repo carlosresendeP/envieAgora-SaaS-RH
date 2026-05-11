@@ -6,25 +6,25 @@ Sistema completo para gerenciamento de processos de recrutamento e seleção foc
 
 <h4>Desktop</h4>
 <p>
-  <img src="./frontend/public/rh-saas-prints/1-hero.png" width="200" style="border-radius: 8px;" alt="Hero">
-  <img src="./frontend/public/rh-saas-prints/2-login.png" width="200" style="border-radius: 8px;" alt="Login">
-  <img src="./frontend/public/rh-saas-prints/3-register.png" width="200" style="border-radius: 8px;" alt="Register">
-  <img src="./frontend/public/rh-saas-prints/4-dashboard.png" width="200" style="border-radius: 8px;" alt="Dashboard">
-  <img src="./frontend/public/rh-saas-prints/4-dashboard-2.png" width="200" style="border-radius: 8px;" alt="Dashboard 2">
-  <img src="./frontend/public/rh-saas-prints/5-vagas.png" width="200" style="border-radius: 8px;" alt="Vagas">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga.png" width="200" style="border-radius: 8px;" alt="Nova Vaga">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-manual.png" width="200" style="border-radius: 8px;" alt="Nova Vaga Manual">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-ia.png" width="200" style="border-radius: 8px;" alt="Nova Vaga IA">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-descricao-ia.png" width="200" style="border-radius: 8px;" alt="Vagas Descrição IA">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-detalhes.png" width="200" style="border-radius: 8px;" alt="Vagas Detalhes">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato.png" width="200" style="border-radius: 8px;" alt="Análise IA Candidato">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png" width="200" style="border-radius: 8px;" alt="Análise IA Candidato Gerado">
-  <img src="./frontend/public/rh-saas-prints/6-candidatos.png" width="200" style="border-radius: 8px;" alt="Candidatos">
-  <img src="./frontend/public/rh-saas-prints/6-candidatos-detalhados.png" width="200" style="border-radius: 8px;" alt="Candidatos Detalhados">
-  <img src="./frontend/public/rh-saas-prints/7-organograma.png" width="200" style="border-radius: 8px;" alt="Organograma">
-  <img src="./frontend/public/rh-saas-prints/8-chat.png" width="200" style="border-radius: 8px;" alt="Chat">
-  <img src="./frontend/public/rh-saas-prints/8-chat-conversa.png" width="200" style="border-radius: 8px;" alt="Chat Conversa">
-  <img src="./frontend/public/rh-saas-prints/9-settings.png" width="200" style="border-radius: 8px;" alt="Settings">
+  <img src="./frontend/public/rh-saas-prints/1-hero.png" width="300" style="border-radius: 8px;" alt="Hero">
+  <img src="./frontend/public/rh-saas-prints/2-login.png" width="300" style="border-radius: 8px;" alt="Login">
+  <img src="./frontend/public/rh-saas-prints/3-register.png" width="300" style="border-radius: 8px;" alt="Register">
+  <img src="./frontend/public/rh-saas-prints/4-dashboard.png" width="300" style="border-radius: 8px;" alt="Dashboard">
+  <img src="./frontend/public/rh-saas-prints/4-dashboard-2.png" width="300" style="border-radius: 8px;" alt="Dashboard 2">
+  <img src="./frontend/public/rh-saas-prints/5-vagas.png" width="300" style="border-radius: 8px;" alt="Vagas">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga.png" width="300" style="border-radius: 8px;" alt="Nova Vaga">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-manual.png" width="300" style="border-radius: 8px;" alt="Nova Vaga Manual">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-ia.png" width="300" style="border-radius: 8px;" alt="Nova Vaga IA">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-descricao-ia.png" width="300" style="border-radius: 8px;" alt="Vagas Descrição IA">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-detalhes.png" width="300" style="border-radius: 8px;" alt="Vagas Detalhes">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato.png" width="300" style="border-radius: 8px;" alt="Análise IA Candidato">
+  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png" width="300" style="border-radius: 8px;" alt="Análise IA Candidato Gerado">
+  <img src="./frontend/public/rh-saas-prints/6-candidatos.png" width="300" style="border-radius: 8px;" alt="Candidatos">
+  <img src="./frontend/public/rh-saas-prints/6-candidatos-detalhados.png" width="300" style="border-radius: 8px;" alt="Candidatos Detalhados">
+  <img src="./frontend/public/rh-saas-prints/7-organograma.png" width="300" style="border-radius: 8px;" alt="Organograma">
+  <img src="./frontend/public/rh-saas-prints/8-chat.png" width="300" style="border-radius: 8px;" alt="Chat">
+  <img src="./frontend/public/rh-saas-prints/8-chat-conversa.png" width="300" style="border-radius: 8px;" alt="Chat Conversa">
+  <img src="./frontend/public/rh-saas-prints/9-settings.png" width="300" style="border-radius: 8px;" alt="Settings">
 </p>
 
 ---
@@ -42,15 +42,15 @@ O **SaaS-RH** é uma plataforma inovadora desenvolvida para revolucionar o setor
 
 ```mermaid
 graph TD
-    A[1. RH acessa Painel e cria Vaga] --> B[2. Sistema gera Public Token da Vaga]
-    B --> C[3. RH compartilha Link Público com Token]
-    C --> D[4. Candidato acessa Link Público]
-    D --> E[5. Candidato preenche dados e anexa Currículo PDF]
-    E --> F[6. Sistema recebe aplicação]
-    F --> G[7. IA processa PDF e cruza com Requisitos da Vaga]
-    G --> H[8. IA gera Score de Compatibilidade %]
-    H --> I[9. RH acessa Painel de Vagas/Candidatos]
-    I --> J[10. RH visualiza ranking de compatibilidade da IA]
+    A["1. RH acessa Painel e cria Vaga"] --> B["2. Sistema gera Public Token da Vaga"]
+    B --> C["3. RH compartilha Link Público com Token"]
+    C --> D["4. Candidato acessa Link Público"]
+    D --> E["5. Candidato preenche dados e anexa Currículo PDF"]
+    E --> F["6. Sistema recebe aplicação"]
+    F --> G["7. IA processa PDF e cruza com Requisitos da Vaga"]
+    G --> H["8. IA gera Score de Compatibilidade %"]
+    H --> I["9. RH acessa Painel de Vagas/Candidatos"]
+    I --> J["10. RH visualiza ranking de compatibilidade da IA"]
 ```
 
 **Resumo do Fluxo:**

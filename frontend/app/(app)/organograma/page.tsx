@@ -226,10 +226,11 @@ function PanelForm({ panelState, nodes, onClose }: PanelFormProps) {
   const isPending = createNode.isPending || updateNode.isPending || deleteNode.isPending
 
   function onSubmit(values: NodeFormValues) {
+    const normalized = { ...values, parentId: values.parentId || null }
     if (isEdit) {
-      updateNode.mutate(values)
+      updateNode.mutate(normalized)
     } else {
-      createNode.mutate(values)
+      createNode.mutate(normalized)
     }
   }
 
