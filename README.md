@@ -15,25 +15,25 @@ O **SaaS-RH** é uma plataforma moderna e escalável focada em otimizar os proce
 ## 📷 Screenshots
 
 <div align="center" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/1-hero.png" alt="Hero" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/2-login.png" alt="Login" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/3-register.png" alt="Register" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/4-dashboard-2.png" alt="Dashboard 2" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/4-dashboard.png" alt="Dashboard" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png" alt="Analise IA Candidato Gerado" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato.png" alt="Analise IA Candidato" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-descricao-ia.png" alt="Vagas Descricao IA" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-detalhes.png" alt="Vagas Detalhes" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-ia.png" alt="Nova Vaga IA" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-manual.png" alt="Nova Vaga Manual" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas-novavaga.png" alt="Nova Vaga" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/5-vagas.png" alt="Vagas" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/6-candidatos-detalhados.png" alt="Candidatos Detalhados" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/6-candidatos.png" alt="Candidatos" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/7-organograma.png" alt="Organograma" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/8-chat-conversa.png" alt="Chat Conversa" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/8-chat.png" alt="Chat" style="width: 100%; border-radius: 8px;" /></div>
-  <div style="max-width: 200px;"><img src="./frontend/public/rh-saas-prints/9-settings.png" alt="Settings" style="width: 100%; border-radius: 8px;" /></div>
+  <img src="./frontend/public/rh-saas-prints/1-hero.png" alt="Hero" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/2-login.png" alt="Login" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/3-register.png" alt="Register" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/4-dashboard-2.png" alt="Dashboard 2" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/4-dashboard.png" alt="Dashboard" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png" alt="Analise IA Candidato Gerado" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato.png" alt="Analise IA Candidato" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-descricao-ia.png" alt="Vagas Descricao IA" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-detalhes.png" alt="Vagas Detalhes" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-ia.png" alt="Nova Vaga IA" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-manual.png" alt="Nova Vaga Manual" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga.png" alt="Nova Vaga" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/5-vagas.png" alt="Vagas" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/6-candidatos-detalhados.png" alt="Candidatos Detalhados" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/6-candidatos.png" alt="Candidatos" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/7-organograma.png" alt="Organograma" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/8-chat-conversa.png" alt="Chat Conversa" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/8-chat.png" alt="Chat" style="width: 200px; border-radius: 8px;" />
+  <img src="./frontend/public/rh-saas-prints/9-settings.png" alt="Settings" style="width: 200px; border-radius: 8px;" />
 </div>
 
 <br />
