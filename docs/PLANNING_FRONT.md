@@ -1,6 +1,6 @@
 # PLANNING — FRONTEND
 
-## EnvieAgora RH · Hackathon #01
+## ContrataJá · Hackathon #01
 
 ---
 

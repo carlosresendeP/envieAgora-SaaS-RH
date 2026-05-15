@@ -1,4 +1,4 @@
-# Próximos Passos — Frontend EnvieAgora RH
+# Próximos Passos — Frontend ContrataJá
 
 > Estado atual: landing page + design system prontos.
 > Este documento define a ordem exata de implementação do restante do frontend.

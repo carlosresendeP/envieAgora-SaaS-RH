@@ -17,7 +17,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -52,9 +51,9 @@ export function Sidebar() {
       {/* Logo */}
       <div className="px-6 mb-8">
         <div className="flex items-center gap-2 text-primary">
-          <Image src="/icon-logo.webp" alt="Logo" className="" width={40} height={20} />
+          <Leaf className="size-8 text-primary" />
           <span className="text-xl font-bold text-sidebar-foreground">
-            EnvieAgora<span className="text-primary text-shadow-sm"> RH</span>
+            Contrata<span className="text-primary text-shadow-sm">Já</span>
           </span>
         </div>
         <p className="text-sidebar-foreground/50 text-xs mt-1">

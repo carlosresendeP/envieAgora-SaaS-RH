@@ -12,9 +12,7 @@ export default function TesteLayout({
       <header className="border-b border-secondary/20 px-4 py-3 flex items-center justify-between bg-card">
         <div className="flex items-center gap-1.5">
           <Leaf className="size-4 text-sidebar" />
-          <span className="font-bold text-foreground text-sm">
-            EnvieAgora RH
-          </span>
+          <span className="font-bold text-foreground text-sm">ContrataJá</span>
         </div>
         <span className="text-xs text-muted-foreground">
           Portal do Candidato

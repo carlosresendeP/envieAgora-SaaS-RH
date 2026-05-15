@@ -51,7 +51,7 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col justify-start gap-5 p-10 h-full w-full">
           <div className="flex items-center gap-2 text-primary">
             <Leaf className="size-8" />
-            <span className="text-2xl font-bold">EnvieAgora RH</span>
+            <span className="text-2xl font-bold">ContrataJá</span>
           </div>
           <div className="max-w-md">
             <h1 className="text-4xl font-bold text-sidebar-foreground mb-4">
@@ -71,7 +71,7 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-2 text-sidebar mb-8">
             <Leaf className="size-8" />
-            <span className="text-2xl font-bold">EnvieAgora RH</span>
+            <span className="text-2xl font-bold">ContrataJá</span>
           </div>
 
           <div className="mb-8">

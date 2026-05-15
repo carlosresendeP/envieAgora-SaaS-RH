@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Leaf, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import Image from "next/image";
 
 const NAV_LINKS = ["Soluções", "Preços", "Sobre"];
 
@@ -25,9 +24,9 @@ export function Header() {
         {/* Logo */}
         <div className="flex items-center gap-2">
           {/*logo*/}
-          <Image src="/icon-logo.webp" alt="Logo" className="" width={60} height={30} />
+          <Leaf className="size-8 text-primary" />
           <span className="text-xl font-bold text-foreground tracking-tight">
-            EnvieAgora<span className="text-primary text-shadow-sm"> RH</span>
+            Contrata<span className="text-primary text-shadow-sm">Já</span>
           </span>
         </div>
 

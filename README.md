@@ -1,4 +1,4 @@
-# 🌐 EnvieAgora RH - Sistema de Gestão de Recursos Humanos
+# 🌐 ContrataJá - Sistema de Gestão de Recursos Humanos
 
 Sistema completo para gerenciamento de processos de recrutamento e seleção focado em automatizar a triagem de candidatos, gerar análises precisas de compatibilidade através de Inteligência Artificial e organizar toda a estrutura da empresa.
 
@@ -54,6 +54,7 @@ graph TD
 ```
 
 **Resumo do Fluxo:**
+
 1. 📝 **Criação da Vaga**: Gestor de RH cria uma vaga (podendo usar IA para gerar a descrição).
 2. 🎟️ **Geração de Link**: O sistema gera um `publicToken` seguro exclusivo daquela vaga.
 3. 🔗 **Compartilhamento**: O link é publicado em portais ou enviado a candidatos.
@@ -68,17 +69,20 @@ graph TD
 ### ✅ Implementadas (MVP)
 
 #### Gestão de Vagas & Inteligência Artificial
+
 - ✅ Criação de vagas manuais ou com geração de texto via IA (OpenAI/Anthropic).
 - ✅ Geração automática de links públicos (`publicToken`) para inscrição.
 - ✅ Leitura e extração de dados de PDFs de currículos.
-- ✅ Geração de *Score* de compatibilidade (Match %) do candidato com a vaga.
+- ✅ Geração de _Score_ de compatibilidade (Match %) do candidato com a vaga.
 
 #### Portal do Candidato
+
 - ✅ Interface pública limpa para inscrição.
 - ✅ Validação robusta de formulário com Zod.
 - ✅ Upload de currículo.
 
 #### Gestão Organizacional
+
 - ✅ Cadastro de Empresas e Recrutadores.
 - ✅ Organograma visual com hierarquias da empresa.
 - ✅ Chat interno entre os recrutadores e administradores.
@@ -86,6 +90,7 @@ graph TD
 - ✅ Envio de E-mails transacionais (via Resend).
 
 #### Interface
+
 - ✅ Design responsivo e limpo com TailwindCSS v4.
 - ✅ Componentes de UI padronizados e acessíveis via Shadcn UI e Radix.
 - ✅ Tabelas de dados dinâmicas e formulários otimizados com React Hook Form.
@@ -96,6 +101,7 @@ graph TD
 ## 🚀 Tecnologias Utilizadas
 
 ### Frontend
+
 - **[Next.js 16+](https://nextjs.org/)** - Framework React (App Router).
 - **[React 19](https://react.dev/)** - Biblioteca principal de UI.
 - **[TypeScript](https://www.typescriptlang.org/)** - Superset tipado do JavaScript.
@@ -107,6 +113,7 @@ graph TD
 - **[Zod](https://zod.dev/)** - Validação de schemas.
 
 ### Backend
+
 - **[Fastify](https://fastify.dev/)** - Framework Node.js de altíssima performance.
 - **[Prisma ORM](https://www.prisma.io/)** - Mapeamento objeto-relacional type-safe.
 - **[PostgreSQL (Supabase)](https://supabase.com/)** - Banco de dados relacional (Nuven).
@@ -134,8 +141,8 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 ### 1. Clone o Repositório
 
 ```bash
-git clone https://github.com/carlosresendeP/envieAgora-SaaS-RH.git
-cd envieAgora-SaaS-RH
+git clone https://github.com/carlosresendeP/contrata-ja.git
+cd contrata-ja
 ```
 
 ### 2. Configuração do Backend
@@ -152,6 +159,7 @@ cp .env.example .env
 ```
 
 Edite o `.env` gerado:
+
 ```env
 PORT=3001
 NODE_ENV=dev
@@ -166,6 +174,7 @@ EMAIL_FROM=onboarding@resend.dev
 ```
 
 Configure o Prisma:
+
 ```bash
 # Sincroniza o banco de dados e gera o Prisma Client
 npx prisma migrate dev
@@ -188,6 +197,7 @@ cp .env.example .env.local
 ```
 
 Edite o `.env.local`:
+
 ```env
 # Apontamento para o seu backend Fastify
 NEXT_PUBLIC_API_URL=http://localhost:3001/api
@@ -202,12 +212,14 @@ NEXT_PUBLIC_API_URL=http://localhost:3001/api
 Para rodar o projeto, você precisa iniciar os dois servidores (Front e Back) paralelamente.
 
 **No terminal 1 (Backend):**
+
 ```bash
 cd Backend
 pnpm dev
 ```
 
 **No terminal 2 (Frontend):**
+
 ```bash
 cd frontend
 pnpm dev
@@ -220,23 +232,27 @@ A aplicação estará disponível em **[http://localhost:3000](http://localhost:
 Após rodar o projeto:
 
 #### 1️⃣ Login Administrativo
+
 1. Acesse: `http://localhost:3000/login`
 2. Autentique-se com as credenciais da empresa (Você precisará criar via código ou DB na primeira vez, se não houver um seed configurado).
 3. Entre no Dashboard Principal.
 
 #### 2️⃣ Criar uma Vaga com IA
+
 1. Vá até a aba "Vagas" e clique em "Nova Vaga".
 2. Selecione a opção para usar a Inteligência Artificial.
-3. Digite um prompt (ex: *"Preciso de um dev FullStack com Next.js e Fastify"*).
+3. Digite um prompt (ex: _"Preciso de um dev FullStack com Next.js e Fastify"_).
 4. O sistema irá preencher a descrição automaticamente. Salve a vaga.
 
 #### 3️⃣ Publicação e Inscrição
+
 1. A vaga gerada terá um `Public Token`. Pegue a URL pública de inscrição fornecida pelo Dashboard.
 2. Abra essa URL em uma janela anônima. Você verá o portal do Candidato.
 3. Preencha seus dados de teste e faça o Upload de um PDF real (currículo).
 4. Envie a candidatura.
 
 #### 4️⃣ Verificando Análise da IA
+
 1. Retorne para a janela de Admin.
 2. Acesse a Vaga criada e veja os candidatos aplicados.
 3. Observe o "Score" (compatibilidade em %) e a resenha textual que a Inteligência Artificial gerou lendo o PDF enviado versus a descrição da Vaga.
@@ -244,12 +260,14 @@ Após rodar o projeto:
 ### Modo Produção (Build)
 
 **Backend:**
+
 ```bash
 npm run build
 npm start
 ```
 
 **Frontend:**
+
 ```bash
 npm run build
 npm start
@@ -258,10 +276,12 @@ npm start
 ### Rodar o Prisma Studio
 
 Para editar os dados do banco usando uma interface visual:
+
 ```bash
 cd Backend
 npx prisma studio
 ```
+
 O Prisma Studio estará em **[http://localhost:5555](http://localhost:5555)**.
 
 ---
@@ -333,21 +353,21 @@ Uma visão geral das rotas primárias expostas no servidor Fastify. (Documentaç
 
 ### Backend (`Backend/.env`)
 
-| Variável | Descrição | Obrigatória | Exemplo |
-|----------|-----------|-------------|---------|
-| `PORT` | Porta de acesso API | ✅ Sim | `3001` |
-| `NODE_ENV` | Modo da API | ✅ Sim | `dev` |
-| `DATABASE_URL` | Connection String do DB | ✅ Sim | `postgresql://...` |
-| `JWT_SECRET` | Secret hash para os tokens | ✅ Sim | `Secreta123!` |
-| `APP_URL` | URL da API | ✅ Sim | `http://localhost:3001/api` |
-| `OPENAI_API_KEY`| Token da OpenAI | ❌ Não (Opcional) | `-...` |
-| `RESEND_API_KEY`| Token do Resend Mailer | ❌ Não (Opcional) | `...` |
+| Variável         | Descrição                  | Obrigatória       | Exemplo                     |
+| ---------------- | -------------------------- | ----------------- | --------------------------- |
+| `PORT`           | Porta de acesso API        | ✅ Sim            | `3001`                      |
+| `NODE_ENV`       | Modo da API                | ✅ Sim            | `dev`                       |
+| `DATABASE_URL`   | Connection String do DB    | ✅ Sim            | `postgresql://...`          |
+| `JWT_SECRET`     | Secret hash para os tokens | ✅ Sim            | `Secreta123!`               |
+| `APP_URL`        | URL da API                 | ✅ Sim            | `http://localhost:3001/api` |
+| `OPENAI_API_KEY` | Token da OpenAI            | ❌ Não (Opcional) | `-...`                      |
+| `RESEND_API_KEY` | Token do Resend Mailer     | ❌ Não (Opcional) | `...`                       |
 
 ### Frontend (`frontend/.env.local`)
 
-| Variável | Descrição | Obrigatória | Exemplo |
-|----------|-----------|-------------|---------|
-| `NEXT_PUBLIC_API_URL`| Endpoint base onde as chamadas do Axios baterão. | ✅ Sim | `http://localhost:3001/api` |
+| Variável              | Descrição                                        | Obrigatória | Exemplo                     |
+| --------------------- | ------------------------------------------------ | ----------- | --------------------------- |
+| `NEXT_PUBLIC_API_URL` | Endpoint base onde as chamadas do Axios baterão. | ✅ Sim      | `http://localhost:3001/api` |
 
 ---
 
@@ -356,6 +376,7 @@ Uma visão geral das rotas primárias expostas no servidor Fastify. (Documentaç
 ### Deploy do Frontend (Recomendado: Vercel)
 
 A plataforma **Vercel** é ideal, visto que o Frontend utiliza Next.js.
+
 1. Suba o código para o GitHub.
 2. Importe o repositório na Vercel e especifique o "Root Directory" como `frontend`.
 3. Defina a variável de ambiente `NEXT_PUBLIC_API_URL` apontando para o seu backend já publicado.
@@ -364,6 +385,7 @@ A plataforma **Vercel** é ideal, visto que o Frontend utiliza Next.js.
 ### Deploy do Backend (Recomendado: Render / Railway / Docker VPS)
 
 Como trata-se de um servidor Node.js/Fastify isolado:
+
 1. Conecte sua branch de produção à plataforma em nuvem (Ex: Render).
 2. Configure o "Root Directory" como `Backend`.
 3. Comando de build: `pnpm run build`
@@ -385,6 +407,7 @@ Como trata-se de um servidor Node.js/Fastify isolado:
 ## 🛠️ Scripts Disponíveis
 
 ### Em `Backend/`
+
 ```bash
 pnpm dev        # Inicia API com hot-reload usando tsx
 pnpm build      # Transpila projeto TS -> JS
@@ -392,6 +415,7 @@ pnpm start      # Roda API em modo produção
 ```
 
 ### Em `frontend/`
+
 ```bash
 pnpm dev        # Inicia front em modo de desenvolvimento
 pnpm build      # Build otimizado do Next.js
@@ -402,6 +426,7 @@ pnpm lint       # Valida codebase (ESLint)
 ---
 
 ## Autor
-**Carlos Paula**
----
-**Versão**: 1.0.0  
+
+## **Carlos Paula**
+
+**Versão**: 1.0.0

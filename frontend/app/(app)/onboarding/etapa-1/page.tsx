@@ -177,7 +177,7 @@ export default function Etapa1Page() {
             <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
             <Input
               id="nome"
-              placeholder="Ex: EnvieAgora RH"
+              placeholder="Ex: ContrataJá"
               className="pl-10"
               {...register("nome")}
             />

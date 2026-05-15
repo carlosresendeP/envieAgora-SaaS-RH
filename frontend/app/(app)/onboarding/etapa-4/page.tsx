@@ -124,7 +124,7 @@ export default function Etapa4Page() {
         (old: Record<string, unknown> | undefined) =>
           old ? { ...old, onboardingStep: 5 } : old,
       );
-      toast.success("Configuração concluída! Bem-vindo ao EnvieAgora RH.");
+      toast.success("Configuração concluída! Bem-vindo ao ContrataJá.");
       router.push("/dashboard");
     } catch {
       toast.error("Erro ao salvar. Tente novamente.");

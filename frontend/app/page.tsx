@@ -4,14 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
-import {
-  Brain,
-  Kanban,
-  Bot,
-  Check,
-  Star,
-  Rocket,
-} from "lucide-react";
+import { Brain, Kanban, Bot, Check, Star, Rocket } from "lucide-react";
 import { Header } from "@/components/landing/Header";
 import { CTAButton } from "@/components/landing/CTAButton";
 import { useRouter } from "next/navigation";
@@ -65,7 +58,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   const handleStartNowClick = () => {
-    router.push('/cadastro');
+    router.push("/cadastro");
   };
 
   return (
@@ -255,15 +248,13 @@ export default function LandingPage() {
               a longo prazo.
             </p>
 
-              <Button
-                type="button"
-                onClick={handleStartNowClick}
-                className="rounded-lg whitespace-nowrap px-10 py-8 font-bold"
-              >
-                Comece Agora
-              </Button>
-
-
+            <Button
+              type="button"
+              onClick={handleStartNowClick}
+              className="rounded-lg whitespace-nowrap px-10 py-8 font-bold"
+            >
+              Comece Agora
+            </Button>
           </div>
         </section>
       </main>
@@ -271,7 +262,7 @@ export default function LandingPage() {
       {/* ── Footer ─────────────────────────────────────────────────────── */}
       <footer className="border-t border-border py-6 px-6 text-center">
         <p className="text-xs text-muted-foreground uppercase tracking-widest font-medium">
-          © 2026 EnvieAgora RH · Recrutamento inteligente para o Brasil
+          © 2026 ContrataJá · Recrutamento inteligente para o Brasil
         </p>
       </footer>
     </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Building2 } from "lucide-react";
+import { Building2, Leaf } from "lucide-react";
 
 export function Header({
   logoUrl,
@@ -21,9 +21,9 @@ export function Header({
         {companyName}
       </span>
       <div className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground">
-        <Image src="/icon-logo.webp" alt="Logo" className="" width={40} height={20} />
+        <Leaf className="size-8 text-primary" />
         <span className="text-xl font-bold text-sidebar">
-          EnvieAgora<span className="text-primary text-shadow-sm"> RH</span>
+          Contrata<span className="text-primary text-shadow-sm">Já</span>
         </span>
       </div>
     </header>

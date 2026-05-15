@@ -11,7 +11,7 @@ export function ErrorState({ errorMsg, onRetry }: ErrorStateProps) {
   const isExpired = errorMsg.toLowerCase().includes("encerrada");
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header logoUrl={null} companyName="EnvieAgora RH" />
+      <Header logoUrl={null} companyName="ContrataJá" />
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="text-center space-y-4 max-w-sm">
           <div className="size-14 rounded-full bg-destructive/10 flex items-center justify-center mx-auto">

@@ -296,7 +296,7 @@ function EmpresaTab() {
               id="nome"
               value={nome}
               onChange={(e) => setValue("nome", e.target.value)}
-              placeholder="Ex: EnvieAgora RH"
+              placeholder="Ex: ContrataJá"
             />
           </div>
           <div className="space-y-1.5">
