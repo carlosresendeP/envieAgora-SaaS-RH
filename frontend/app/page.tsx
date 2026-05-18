@@ -148,13 +148,13 @@ export default function LandingPage() {
     <div className="bg-background text-foreground antialiased min-h-screen">
       <Header />
 
-      <main className="w-full  mx-auto overflow-hidden">
+      <main className="w-full max-w-[1440px] mx-auto">
         {/* ── Hero ──────────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-[#1a2310]">
+        <section className="relative bg-[#1a2310]">
           {/* Lime top bar */}
           <div className="h-1.5 bg-primary w-full" />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[580px] container">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[580px]">
             {/* Left: text */}
             <motion.div
               className="flex flex-col justify-center gap-8 px-8 md:px-14 lg:px-16 py-20 lg:py-24"
@@ -173,7 +173,7 @@ export default function LandingPage() {
 
               <motion.h1
                 variants={fadeUp}
-                className="text-6xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight text-white"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight text-white"
               >
                 Contrata<span className="text-primary">Já!</span>
               </motion.h1>
