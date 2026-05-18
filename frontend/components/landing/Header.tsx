@@ -19,7 +19,7 @@ export function Header() {
   }
 
   return (
-    <header className="w-full max-w-[1440px] mx-auto px-6 py-4 relative z-20">
+    <header className="w-full max-w-[1440px] mx-auto py-4 relative z-20 px-6 md:px-20">
       <div className="flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">

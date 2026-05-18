@@ -148,16 +148,16 @@ export default function LandingPage() {
     <div className="bg-background text-foreground antialiased min-h-screen">
       <Header />
 
-      <main className="w-full max-w-[1440px] mx-auto">
+      <main className="w-full">
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section className="relative bg-[#1a2310]">
           {/* Lime top bar */}
           <div className="h-1.5 bg-primary w-full" />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[580px]">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[580px] max-w-7xl mx-auto">
             {/* Left: text */}
             <motion.div
-              className="flex flex-col justify-center gap-8 px-8 md:px-14 lg:px-16 py-20 lg:py-24"
+              className="flex flex-col justify-center gap-8 px-8 md:px-14 lg:px-16 py-20 lg:py-24 "
               variants={stagger}
               initial="hidden"
               animate="visible"
