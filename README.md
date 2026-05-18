@@ -1,432 +1,328 @@
-# 🌐 ContrataJá - Sistema de Gestão de Recursos Humanos
+# ContrataJá
 
-Sistema completo para gerenciamento de processos de recrutamento e seleção focado em automatizar a triagem de candidatos, gerar análises precisas de compatibilidade através de Inteligência Artificial e organizar toda a estrutura da empresa.
-
-<h3>Imagens do Projeto</h3>
-
-<h4>Desktop</h4>
-<p>
-  <img src="./frontend/public/rh-saas-prints/1-hero.png" width="300" style="border-radius: 8px;" alt="Hero">
-  <img src="./frontend/public/rh-saas-prints/2-login.png" width="300" style="border-radius: 8px;" alt="Login">
-  <img src="./frontend/public/rh-saas-prints/3-register.png" width="300" style="border-radius: 8px;" alt="Register">
-  <img src="./frontend/public/rh-saas-prints/4-dashboard.png" width="300" style="border-radius: 8px;" alt="Dashboard">
-  <img src="./frontend/public/rh-saas-prints/4-dashboard-2.png" width="300" style="border-radius: 8px;" alt="Dashboard 2">
-  <img src="./frontend/public/rh-saas-prints/5-vagas.png" width="300" style="border-radius: 8px;" alt="Vagas">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga.png" width="300" style="border-radius: 8px;" alt="Nova Vaga">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-manual.png" width="300" style="border-radius: 8px;" alt="Nova Vaga Manual">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-novavaga-ia.png" width="300" style="border-radius: 8px;" alt="Nova Vaga IA">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-descricao-ia.png" width="300" style="border-radius: 8px;" alt="Vagas Descrição IA">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-detalhes.png" width="300" style="border-radius: 8px;" alt="Vagas Detalhes">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato.png" width="300" style="border-radius: 8px;" alt="Análise IA Candidato">
-  <img src="./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png" width="300" style="border-radius: 8px;" alt="Análise IA Candidato Gerado">
-  <img src="./frontend/public/rh-saas-prints/6-candidatos.png" width="300" style="border-radius: 8px;" alt="Candidatos">
-  <img src="./frontend/public/rh-saas-prints/6-candidatos-detalhados.png" width="300" style="border-radius: 8px;" alt="Candidatos Detalhados">
-  <img src="./frontend/public/rh-saas-prints/7-organograma.png" width="300" style="border-radius: 8px;" alt="Organograma">
-  <img src="./frontend/public/rh-saas-prints/8-chat.png" width="300" style="border-radius: 8px;" alt="Chat">
-  <img src="./frontend/public/rh-saas-prints/8-chat-conversa.png" width="300" style="border-radius: 8px;" alt="Chat Conversa">
-  <img src="./frontend/public/rh-saas-prints/9-settings.png" width="300" style="border-radius: 8px;" alt="Settings">
-</p>
+**Plataforma SaaS de recrutamento com Inteligência Artificial** — analisa currículos, calcula compatibilidade comportamental via metodologia DISC e organiza todo o pipeline de seleção em um único painel.
 
 ---
 
-## 🎯 Sobre o Projeto
+## Visão Geral
 
-O **SaaS-RH** é uma plataforma inovadora desenvolvida para revolucionar o setor de Recursos Humanos. Integrando Inteligência Artificial no processo de seleção, o sistema permite:
+O ContrataJá é uma plataforma multi-tenant voltada para equipes de RH que precisam escalar processos seletivos com qualidade. A IA lê o currículo do candidato, cruza com os requisitos da vaga e gera um **Score de Alinhamento** — técnico, comportamental e cultural — em segundos.
 
-- **Geração de Vagas com IA**: Criação de descrições de cargos detalhadas a partir de prompts curtos.
-- **Análise Automática de Candidatos**: Leitura de currículos (PDF) e cruzamento de dados com a vaga usando IA (OpenAI/Anthropic).
-- **Portal do Candidato**: Página pública acessível via token único para o envio fácil de aplicações.
-- **Painel Administrativo Completo**: Gestão de empresas, recrutadores, organograma e chat interno.
-
-### 🔄 Fluxo de Recrutamento
+### Fluxo de recrutamento
 
 ```mermaid
 graph TD
-    A["1. RH acessa Painel e cria Vaga"] --> B["2. Sistema gera Public Token da Vaga"]
-    B --> C["3. RH compartilha Link Público com Token"]
-    C --> D["4. Candidato acessa Link Público"]
-    D --> E["5. Candidato preenche dados e anexa Currículo PDF"]
-    E --> F["6. Sistema recebe aplicação"]
-    F --> G["7. IA processa PDF e cruza com Requisitos da Vaga"]
-    G --> H["8. IA gera Score de Compatibilidade %"]
-    H --> I["9. RH acessa Painel de Vagas/Candidatos"]
-    I --> J["10. RH visualiza ranking de compatibilidade da IA"]
+    A[RH cria a vaga no painel] --> B[Sistema gera link público com token único]
+    B --> C[Candidato acessa o link e envia currículo PDF]
+    C --> D[IA extrai dados e calcula Score de Alinhamento]
+    D --> E[RH visualiza ranking de compatibilidade]
+    E --> F[Candidatos aprovados avançam no pipeline]
 ```
 
-**Resumo do Fluxo:**
+---
 
-1. 📝 **Criação da Vaga**: Gestor de RH cria uma vaga (podendo usar IA para gerar a descrição).
-2. 🎟️ **Geração de Link**: O sistema gera um `publicToken` seguro exclusivo daquela vaga.
-3. 🔗 **Compartilhamento**: O link é publicado em portais ou enviado a candidatos.
-4. 📄 **Inscrição**: O candidato acessa o link e faz o upload de seu currículo em PDF.
-5. 🧠 **Análise por Inteligência Artificial**: A IA lê o PDF, extrai dados e pontua o candidato com base na descrição da vaga.
-6. 🎯 **Triagem Facilitada**: O RH visualiza os candidatos ranqueados pela porcentagem de compatibilidade (Score IA).
+## Funcionalidades
+
+### Gestão de Vagas
+
+- Criação manual ou via IA (geração de descrição a partir de um prompt curto)
+- Link público com token único por vaga para inscrição sem cadastro
+- Pipeline de candidatos com status rastreável
+
+### Inteligência Artificial
+
+- Leitura e extração de dados de currículos em PDF
+- Geração de Score de Alinhamento (técnico, cultural e de senioridade)
+- Análise narrativa do perfil do candidato versus requisitos da vaga
+- Chat interno com IA para suporte ao recrutador
+
+### Portal do Candidato
+
+- Interface pública acessível via token, sem necessidade de conta
+- Upload de currículo e preenchimento de dados básicos
+- Testes psicométricos integrados (DISC, Eneagrama, 16 Personalidades)
+
+### Gestão Organizacional
+
+- Organograma visual com hierarquias e cargos
+- Cadastro de empresas e recrutadores (multi-tenant)
+- Envio de e-mails transacionais via Resend
+
+### Segurança
+
+- Autenticação JWT com hash de senhas (bcrypt)
+- Validação de payloads com Zod em todas as rotas
+- Proteção de headers HTTP com Fastify Helmet
 
 ---
 
-## ✨ Funcionalidades
+## Tecnologias
 
-### ✅ Implementadas (MVP)
-
-#### Gestão de Vagas & Inteligência Artificial
-
-- ✅ Criação de vagas manuais ou com geração de texto via IA (OpenAI/Anthropic).
-- ✅ Geração automática de links públicos (`publicToken`) para inscrição.
-- ✅ Leitura e extração de dados de PDFs de currículos.
-- ✅ Geração de _Score_ de compatibilidade (Match %) do candidato com a vaga.
-
-#### Portal do Candidato
-
-- ✅ Interface pública limpa para inscrição.
-- ✅ Validação robusta de formulário com Zod.
-- ✅ Upload de currículo.
-
-#### Gestão Organizacional
-
-- ✅ Cadastro de Empresas e Recrutadores.
-- ✅ Organograma visual com hierarquias da empresa.
-- ✅ Chat interno entre os recrutadores e administradores.
-- ✅ Autenticação segura com JWT e hash de senhas (bcrypt).
-- ✅ Envio de E-mails transacionais (via Resend).
-
-#### Interface
-
-- ✅ Design responsivo e limpo com TailwindCSS v4.
-- ✅ Componentes de UI padronizados e acessíveis via Shadcn UI e Radix.
-- ✅ Tabelas de dados dinâmicas e formulários otimizados com React Hook Form.
-- ✅ Feedback de sucesso/erro usando Toasts sonoros e visuais.
+| Camada    | Stack                                                                             |
+| --------- | --------------------------------------------------------------------------------- |
+| Frontend  | Next.js 16, React 19, TypeScript, TailwindCSS v4, Shadcn UI, Zustand, TanStack Query |
+| Backend   | Fastify 5, TypeScript, Prisma 7, PostgreSQL                                       |
+| IA        | Vercel AI SDK (Anthropic Claude / OpenAI GPT)                                     |
+| E-mail    | Resend                                                                            |
+| Animações | Framer Motion                                                                     |
+| Deploy    | Vercel (frontend) + Railway ou Render (backend)                                   |
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Pré-requisitos
 
-### Frontend
-
-- **[Next.js 16+](https://nextjs.org/)** - Framework React (App Router).
-- **[React 19](https://react.dev/)** - Biblioteca principal de UI.
-- **[TypeScript](https://www.typescriptlang.org/)** - Superset tipado do JavaScript.
-- **[TailwindCSS v4](https://tailwindcss.com/)** - Framework CSS utilitário.
-- **[Zustand](https://zustand-demo.pmnd.rs/)** - Gerenciador de estados globais leve.
-- **[React Query (TanStack)](https://tanstack.com/query/latest)** - Cache e sincronização de dados HTTP.
-- **[Lucide React](https://lucide.dev/)** - Biblioteca de ícones.
-- **[React Hook Form](https://react-hook-form.com/)** - Gerenciamento e validação de forms.
-- **[Zod](https://zod.dev/)** - Validação de schemas.
-
-### Backend
-
-- **[Fastify](https://fastify.dev/)** - Framework Node.js de altíssima performance.
-- **[Prisma ORM](https://www.prisma.io/)** - Mapeamento objeto-relacional type-safe.
-- **[PostgreSQL (Supabase)](https://supabase.com/)** - Banco de dados relacional (Nuven).
-- **[AI SDK](https://sdk.vercel.ai/docs)** - Abstração para lidar com OpenAI e Anthropic.
-- **[Resend](https://resend.com/)** - Plataforma para envio de E-mails transacionais.
-- **[Zod / Type Provider](https://github.com/turkerdev/fastify-type-provider-zod)** - Validação de payloads e responses na API.
-- **[bcryptjs](https://www.npmjs.com/package/bcryptjs)** - Hashing de senhas seguro.
+- Node.js 20 ou superior
+- pnpm 9 ou superior (`npm install -g pnpm`)
+- PostgreSQL (local ou Supabase)
+- Chaves de API: OpenAI **ou** Anthropic, e Resend
 
 ---
 
-## 📦 Pré-requisitos
+## Instalação
 
-Antes de começar, certifique-se de ter instalado em sua máquina:
-
-- **[Node.js](https://nodejs.org/)** (versão 20.x ou superior)
-- **[pnpm](https://pnpm.io/)** (Gerenciador de pacotes recomendado para este projeto)
-- **[Git](https://git-scm.com/)**
-- Conta no **[Supabase](https://supabase.com/)** (Para instanciar o PostgreSQL na nuvem) ou PostgreSQL local.
-- Conta na **OpenAI / Anthropic** e **Resend** (Opcional, mas exigido para os recursos de IA e E-mail funcionarem).
-
----
-
-## ⚙️ Instalação e Configuração
-
-### 1. Clone o Repositório
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/carlosresendeP/contrata-ja.git
 cd contrata-ja
 ```
 
-### 2. Configuração do Backend
+### 2. Configure o Backend
 
 ```bash
 cd Backend
 pnpm install
-```
-
-Crie o arquivo `.env` na pasta `Backend`:
-
-```bash
 cp .env.example .env
 ```
 
-Edite o `.env` gerado:
+Preencha o `.env`:
 
 ```env
 PORT=3001
-NODE_ENV=dev
-DATABASE_URL="sua connection string do postgres"
-DIRECT_URL="sua connection string direta do postgres (se usar Supabase)"
-JWT_SECRET="sua_chave_jwt_super_secreta"
+NODE_ENV=development
+DATABASE_URL="postgresql://user:password@host:5432/contrataja"
+DIRECT_URL="postgresql://user:password@host:5432/contrataja"
+JWT_SECRET="<chave-aleatória-de-no-mínimo-32-caracteres>"
 APP_URL=http://localhost:3001/api
 
-OPENAI_API_KEY="sk-SuaChaveOpenAI"
-RESEND_API_KEY="re_SuaChaveResend"
-EMAIL_FROM=onboarding@resend.dev
+ANTHROPIC_API_KEY="sk-ant-..."   # ou OPENAI_API_KEY="sk-..."
+RESEND_API_KEY="re_..."
+EMAIL_FROM="no-reply@seudominio.com"
 ```
 
-Configure o Prisma:
+Execute as migrações:
 
 ```bash
-# Sincroniza o banco de dados e gera o Prisma Client
 npx prisma migrate dev
 npx prisma generate
 ```
 
-### 3. Configuração do Frontend
-
-Volte para a raiz e acesse a pasta do Frontend:
+### 3. Configure o Frontend
 
 ```bash
 cd ../frontend
 pnpm install
-```
-
-Crie o arquivo `.env.local` na pasta `frontend`:
-
-```bash
 cp .env.example .env.local
 ```
 
-Edite o `.env.local`:
+Preencha o `.env.local`:
 
 ```env
-# Apontamento para o seu backend Fastify
 NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
 
 ---
 
-## 🎮 Como Rodar o Projeto
+## Rodando localmente
 
-### Modo Desenvolvimento
-
-Para rodar o projeto, você precisa iniciar os dois servidores (Front e Back) paralelamente.
-
-**No terminal 1 (Backend):**
+Inicie os dois servidores em terminais separados:
 
 ```bash
-cd Backend
-pnpm dev
+# Terminal 1 — Backend (porta 3001)
+cd Backend && pnpm dev
+
+# Terminal 2 — Frontend (porta 3000)
+cd frontend && pnpm dev
 ```
 
-**No terminal 2 (Frontend):**
+Acesse: [http://localhost:3000](http://localhost:3000)
+
+Para inspecionar o banco de dados visualmente:
 
 ```bash
-cd frontend
-pnpm dev
+cd Backend && npx prisma studio
+# Disponível em http://localhost:5555
 ```
-
-A aplicação estará disponível em **[http://localhost:3000](http://localhost:3000)**.
-
-### 🚀 Primeiros Passos - Guia Rápido
-
-Após rodar o projeto:
-
-#### 1️⃣ Login Administrativo
-
-1. Acesse: `http://localhost:3000/login`
-2. Autentique-se com as credenciais da empresa (Você precisará criar via código ou DB na primeira vez, se não houver um seed configurado).
-3. Entre no Dashboard Principal.
-
-#### 2️⃣ Criar uma Vaga com IA
-
-1. Vá até a aba "Vagas" e clique em "Nova Vaga".
-2. Selecione a opção para usar a Inteligência Artificial.
-3. Digite um prompt (ex: _"Preciso de um dev FullStack com Next.js e Fastify"_).
-4. O sistema irá preencher a descrição automaticamente. Salve a vaga.
-
-#### 3️⃣ Publicação e Inscrição
-
-1. A vaga gerada terá um `Public Token`. Pegue a URL pública de inscrição fornecida pelo Dashboard.
-2. Abra essa URL em uma janela anônima. Você verá o portal do Candidato.
-3. Preencha seus dados de teste e faça o Upload de um PDF real (currículo).
-4. Envie a candidatura.
-
-#### 4️⃣ Verificando Análise da IA
-
-1. Retorne para a janela de Admin.
-2. Acesse a Vaga criada e veja os candidatos aplicados.
-3. Observe o "Score" (compatibilidade em %) e a resenha textual que a Inteligência Artificial gerou lendo o PDF enviado versus a descrição da Vaga.
-
-### Modo Produção (Build)
-
-**Backend:**
-
-```bash
-npm run build
-npm start
-```
-
-**Frontend:**
-
-```bash
-npm run build
-npm start
-```
-
-### Rodar o Prisma Studio
-
-Para editar os dados do banco usando uma interface visual:
-
-```bash
-cd Backend
-npx prisma studio
-```
-
-O Prisma Studio estará em **[http://localhost:5555](http://localhost:5555)**.
 
 ---
 
-## 📁 Estrutura do Projeto
-
-O projeto é um **Monorepo** não acoplado fisicamente (pastas separadas).
+## Estrutura do projeto
 
 ```
-saas-rh/
-├── Backend/                      # API Fastify
-│   ├── prisma/                   # Schema do banco de dados (schema.prisma)
-│   ├── src/
-│   │   ├── Ai/                   # Serviços de comunicação com OpenAI/Anthropic
-│   │   ├── config/               # Setup de Env e libs
-│   │   ├── controllers/          # Controladores (recebem as rotas HTTP)
-│   │   ├── middleware/           # Middlewares de Autenticação/Segurança
-│   │   ├── Routes/               # Definições de Endpoints
-│   │   ├── schemas/              # Tipagem e validações Zod reutilizáveis
-│   │   ├── services/             # Lógica de banco (Prisma) e regras de negócio
-│   │   ├── app.ts                # Inicialização do Fastify
-│   │   └── server.ts             # Entry point de Listen na porta
-│   └── package.json
+contrata-ja/
+├── Backend/
+│   ├── prisma/
+│   │   ├── schema.prisma          # Modelagem das entidades
+│   │   ├── migrations/            # Histórico SQL
+│   │   └── seed.ts                # Dados de demonstração
+│   └── src/
+│       ├── Ai/                    # Wrappers Anthropic e OpenAI
+│       ├── config/                # Variáveis de ambiente e setup
+│       ├── controllers/           # Handlers HTTP
+│       ├── middleware/            # Autenticação JWT e guards
+│       ├── Routes/                # Definição de endpoints
+│       ├── schemas/               # Schemas Zod reutilizáveis
+│       ├── services/              # Lógica de negócio e queries Prisma
+│       ├── app.ts                 # Registro de plugins e rotas
+│       └── server.ts              # Entry point
 │
-└── frontend/                     # Aplicação Next.js (App Router)
-    ├── app/                      # Rotas de páginas (/login, /dashboard, etc)
-    ├── components/               # Componentes React reutilizáveis e Shadcn UI
-    ├── hooks/                    # Lógicas locais extraídas (React Hooks)
-    ├── lib/                      # Zod Validations, utils
-    ├── public/                   # Imagens e ícones
-    ├── services/                 # Clientes Axios para consumir o Backend
-    ├── store/                    # Arquivos do Zustand para estado global
-    ├── next.config.ts            # Configurações do framework
-    ├── tailwind.config.ts        # Setup de temas, cores e bordas
-    └── package.json              # Dependências
+└── frontend/
+    ├── app/
+    │   ├── (marketing)/           # Páginas públicas (login, cadastro)
+    │   ├── (app)/                 # Área protegida (dashboard, vagas, etc.)
+    │   └── teste/[token]/         # Portal público do candidato
+    ├── components/
+    │   ├── ui/                    # Componentes Shadcn UI
+    │   ├── layout/                # Shell, Sidebar, Header
+    │   ├── landing/               # Seções da landing page
+    │   ├── vagas/                 # Componentes de gestão de vagas
+    │   ├── relatorio/             # Relatório de match do candidato
+    │   ├── organograma/           # Visualização do organograma
+    │   └── testes/                # UI dos testes psicométricos
+    ├── services/                  # Clientes Axios por domínio
+    ├── store/                     # Estado global Zustand
+    ├── hooks/                     # Custom hooks
+    └── types/                     # Tipos TypeScript da API
 ```
 
 ---
 
-## 🔌 APIs Disponíveis
+## Referência da API
 
-Uma visão geral das rotas primárias expostas no servidor Fastify. (Documentação completa via Swagger/Postman recomendada).
+Prefixo base: `/api`
 
 ### Autenticação
 
-- `POST /api/auth/login` - Valida e-mail/senha, retorna JWT Auth e dados de Sessão.
-- `POST /api/auth/register` - Registro inicial de uma nova companhia/gestor.
+| Método | Rota             | Descrição                              | Auth |
+| ------ | ---------------- | -------------------------------------- | ---- |
+| POST   | `/auth/register` | Cria empresa e usuário administrador   | —    |
+| POST   | `/auth/login`    | Autentica e retorna JWT                | —    |
+| GET    | `/auth/me`       | Retorna dados do usuário autenticado   | JWT  |
 
 ### Vagas
 
-- `POST /api/vagas` - Cria uma nova vaga.
-- `POST /api/vagas/ai/generate` - Solicita à IA a descrição formatada de uma vaga baseada num input simples.
-- `GET /api/vagas` - Retorna a lista de vagas da empresa logada.
-- `GET /api/vagas/:id` - Retorna detalhes de uma vaga específica.
+| Método | Rota                  | Descrição                              | Auth |
+| ------ | --------------------- | -------------------------------------- | ---- |
+| GET    | `/vagas`              | Lista vagas da empresa                 | JWT  |
+| POST   | `/vagas`              | Cria nova vaga                         | JWT  |
+| GET    | `/vagas/:id`          | Detalhes de uma vaga                   | JWT  |
+| DELETE | `/vagas/:id`          | Remove uma vaga                        | JWT  |
+| POST   | `/vagas/ai/generate`  | Gera descrição de vaga via IA          | JWT  |
 
 ### Candidatos
 
-- `GET /api/candidatos/public-token/:token` - Valida se o Token público da vaga existe para abrir o formulário do candidato.
-- `POST /api/candidatos` - Rota pública para submeter formulário (FormData) com currículo (PDF).
-- `POST /api/candidatos/analyze/:id` - Inicia a análise da IA de um candidato em relação a vaga.
+| Método | Rota                          | Descrição                                   | Auth    |
+| ------ | ----------------------------- | ------------------------------------------- | ------- |
+| GET    | `/candidatos/public-token/:token` | Valida token e retorna dados da vaga    | Público |
+| POST   | `/candidatos`                 | Submete candidatura com currículo PDF       | Público |
+| GET    | `/candidatos`                 | Lista candidatos da empresa                 | JWT     |
+| POST   | `/candidatos/analyze/:id`     | Dispara análise de IA para o candidato      | JWT     |
 
-### Notificações & Emails
+### Organograma
 
-- `POST /api/emails/send` - Dispara envios utilizando a API do Resend.
+| Método | Rota                    | Descrição                        | Auth |
+| ------ | ----------------------- | -------------------------------- | ---- |
+| GET    | `/organograma`          | Retorna hierarquia da empresa    | JWT  |
+| POST   | `/organograma`          | Adiciona nó ao organograma       | JWT  |
+| PUT    | `/organograma/:id`      | Atualiza nó                      | JWT  |
+| DELETE | `/organograma/:id`      | Remove nó                        | JWT  |
 
 ---
 
-## 🔐 Variáveis de Ambiente
+## Variáveis de ambiente
 
 ### Backend (`Backend/.env`)
 
-| Variável         | Descrição                  | Obrigatória       | Exemplo                     |
-| ---------------- | -------------------------- | ----------------- | --------------------------- |
-| `PORT`           | Porta de acesso API        | ✅ Sim            | `3001`                      |
-| `NODE_ENV`       | Modo da API                | ✅ Sim            | `dev`                       |
-| `DATABASE_URL`   | Connection String do DB    | ✅ Sim            | `postgresql://...`          |
-| `JWT_SECRET`     | Secret hash para os tokens | ✅ Sim            | `Secreta123!`               |
-| `APP_URL`        | URL da API                 | ✅ Sim            | `http://localhost:3001/api` |
-| `OPENAI_API_KEY` | Token da OpenAI            | ❌ Não (Opcional) | `-...`                      |
-| `RESEND_API_KEY` | Token do Resend Mailer     | ❌ Não (Opcional) | `...`                       |
+| Variável            | Obrigatória | Descrição                                         |
+| ------------------- | ----------- | ------------------------------------------------- |
+| `PORT`              | Sim         | Porta da API (padrão: `3001`)                     |
+| `NODE_ENV`          | Sim         | `development` ou `production`                     |
+| `DATABASE_URL`      | Sim         | Connection string PostgreSQL (Prisma pooled)      |
+| `DIRECT_URL`        | Não         | Connection string direta (necessária no Supabase) |
+| `JWT_SECRET`        | Sim         | Chave para assinar tokens (mínimo 32 caracteres)  |
+| `APP_URL`           | Sim         | URL base da API                                   |
+| `ANTHROPIC_API_KEY` | Condicional | Chave Anthropic (se não usar OpenAI)              |
+| `OPENAI_API_KEY`    | Condicional | Chave OpenAI (se não usar Anthropic)              |
+| `RESEND_API_KEY`    | Não         | Chave Resend para envio de e-mails                |
+| `EMAIL_FROM`        | Não         | Endereço remetente dos e-mails transacionais      |
 
 ### Frontend (`frontend/.env.local`)
 
-| Variável              | Descrição                                        | Obrigatória | Exemplo                     |
-| --------------------- | ------------------------------------------------ | ----------- | --------------------------- |
-| `NEXT_PUBLIC_API_URL` | Endpoint base onde as chamadas do Axios baterão. | ✅ Sim      | `http://localhost:3001/api` |
+| Variável              | Obrigatória | Descrição                         |
+| --------------------- | ----------- | --------------------------------- |
+| `NEXT_PUBLIC_API_URL` | Sim         | URL base da API Fastify           |
 
 ---
 
-## 🌐 Deploy
+## Deploy
 
-### Deploy do Frontend (Recomendado: Vercel)
+### Frontend — Vercel
 
-A plataforma **Vercel** é ideal, visto que o Frontend utiliza Next.js.
+1. Importe o repositório na [Vercel](https://vercel.com) e defina o **Root Directory** como `frontend`.
+2. Configure a variável `NEXT_PUBLIC_API_URL` apontando para a URL do backend em produção.
+3. Deploy automático em cada push para `main`.
 
-1. Suba o código para o GitHub.
-2. Importe o repositório na Vercel e especifique o "Root Directory" como `frontend`.
-3. Defina a variável de ambiente `NEXT_PUBLIC_API_URL` apontando para o seu backend já publicado.
-4. Execute o Deploy. O App Router lidará perfeitamente com Server Components e otimizações de imagem automaticamente.
+### Backend — Railway / Render
 
-### Deploy do Backend (Recomendado: Render / Railway / Docker VPS)
-
-Como trata-se de um servidor Node.js/Fastify isolado:
-
-1. Conecte sua branch de produção à plataforma em nuvem (Ex: Render).
-2. Configure o "Root Directory" como `Backend`.
-3. Comando de build: `pnpm run build`
-4. Comando de início: `pnpm start`
-5. Adicione **todas** as variáveis de ambiente necessárias via painel da cloud host e assegure-se de que a instância do banco de dados (Supabase ou afins) esteja autorizada a receber as conexões IP.
+1. Conecte o repositório e defina o **Root Directory** como `Backend`.
+2. Configure todas as variáveis de ambiente no painel da plataforma.
+3. Comando de build: `pnpm build`
+4. Comando de start: `pnpm start`
+5. Execute as migrações no primeiro deploy: `npx prisma migrate deploy`
 
 ---
 
-## 📚 Documentação Adicional
+## Scripts
 
-- **[Next.js App Router Docs](https://nextjs.org/docs/app)**
-- **[Fastify Route Documentation](https://fastify.dev/docs/latest/Reference/Routes/)**
-- **[Prisma ORM Referência](https://www.prisma.io/docs)**
-- **[TailwindCSS v4](https://tailwindcss.com/docs/installation)**
-- **[Vercel AI SDK (OpenAI/Anthropic)](https://sdk.vercel.ai/docs)**
+### Backend
+
+| Comando       | Descrição                                      |
+| ------------- | ---------------------------------------------- |
+| `pnpm dev`    | API em modo desenvolvimento com hot-reload     |
+| `pnpm build`  | Compila TypeScript para `dist/`                |
+| `pnpm start`  | Executa o build de produção                    |
+
+### Frontend
+
+| Comando       | Descrição                                      |
+| ------------- | ---------------------------------------------- |
+| `pnpm dev`    | Servidor de desenvolvimento (porta 3000)       |
+| `pnpm build`  | Build otimizado para produção                  |
+| `pnpm start`  | Serve o build de produção                      |
+| `pnpm lint`   | Valida o código com ESLint                     |
 
 ---
 
-## 🛠️ Scripts Disponíveis
+## Screenshots
 
-### Em `Backend/`
+<details>
+<summary>Ver capturas de tela</summary>
 
-```bash
-pnpm dev        # Inicia API com hot-reload usando tsx
-pnpm build      # Transpila projeto TS -> JS
-pnpm start      # Roda API em modo produção
-```
+| | |
+|---|---|
+| ![Hero](./frontend/public/rh-saas-prints/1-hero.png) | ![Login](./frontend/public/rh-saas-prints/2-login.png) |
+| ![Dashboard](./frontend/public/rh-saas-prints/4-dashboard.png) | ![Vagas](./frontend/public/rh-saas-prints/5-vagas.png) |
+| ![Candidatos](./frontend/public/rh-saas-prints/6-candidatos.png) | ![Organograma](./frontend/public/rh-saas-prints/7-organograma.png) |
+| ![Chat IA](./frontend/public/rh-saas-prints/8-chat.png) | ![Análise IA](./frontend/public/rh-saas-prints/5-vagas-analise-ia-candidato-gerado.png) |
 
-### Em `frontend/`
-
-```bash
-pnpm dev        # Inicia front em modo de desenvolvimento
-pnpm build      # Build otimizado do Next.js
-pnpm start      # Roda o Server (SSR) de produção Next.js
-pnpm lint       # Valida codebase (ESLint)
-```
+</details>
 
 ---
 
 ## Autor
 
-## **Carlos Paula**
+**Carlos Paula** — [GitHub](https://github.com/carlosresendeP)
 
-**Versão**: 1.0.0
+---
+
+**Versão:** 1.0.0 · **Licença:** MIT

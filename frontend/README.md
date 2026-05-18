@@ -1,157 +1,174 @@
-# 🎨 SaaS-RH - Frontend Application
+# ContrataJá — Frontend
 
-Este é o repositório **Frontend** do projeto SaaS-RH. Ele foi desenvolvido com as mais modernas tecnologias do ecossistema React, com foco absoluto em performance, SEO e Experiência do Usuário (UX). Aqui, gestores de RH gerenciam vagas, e os candidatos realizam suas inscrições em uma interface altamente responsiva e acessível.
----
-
-## 🎯 Sobre o Frontend
-
-A aplicação client-side atua de forma totalmente independente do backend, comunicando-se via API REST. Para entregar uma interface sofisticada e sem atrasos, adotamos a estratégia do App Router do Next.js (SSR/SSG). 
-
-### 🔄 Arquitetura e Fluxo de Dados (Frontend)
-
-```mermaid
-graph TD
-    A[Usuário Interage com a UI] --> B{Ação}
-    B -->|Navegação| C[Next.js App Router SSR]
-    B -->|Submissão de Formulário| D[React Hook Form + Zod Validação]
-    D -->|Válido| E[TanStack Query Mutations]
-    E -->|Requisição| F[Serviços da API Axios]
-    F -->|Resposta OK| G[Zustand State Update & Sonner Toast]
-    F -->|Erro| H[Exibe Erro amigável no Componente]
-```
-
-**Explicação do Fluxo:**
-1. 🖥️ **Navegação**: A arquitetura App Router mapeia URLs para componentes server-side primeiro, entregando HTML limpo e rápido para SEO.
-2. 📝 **Formulários Seguros**: Interações de input são gerenciadas pelo React Hook Form, evitando re-renderizações desnecessárias. O Zod bloqueia dados inválidos imediatamente.
-3. ☁️ **Fetch & Cache**: O TanStack Query (React Query) aciona as APIs usando Axios, guardando as requisições em cache. Se a mesma aba solicitar os mesmos dados, a tela não tem _loading_ (Cache First).
-4. 🌍 **Estado Global**: Para gerir temas (Dark/Light mode) ou sessão do usuário na máquina, usamos Zustand, uma alternativa leve e flexível ao Context API.
+Aplicação Next.js para gestão de recrutamento. Inclui painel administrativo para recrutadores, portal público para candidatos e interface de análise de compatibilidade gerada por IA.
 
 ---
 
-## 🚀 Tecnologias e Ferramentas
+## Tecnologias
 
-Esta arquitetura adota referências sólidas da indústria (clique nos links para acessar as documentações oficiais):
-
-- **[Next.js (v16+)](https://nextjs.org/)** - O framework React otimizado com App Router, SSR e Server Components.
-- **[React.js (v19)](https://react.dev/)** - Biblioteca base construindo interfaces compostas por componentes independentes.
-- **[Tailwind CSS (v4)](https://tailwindcss.com/)** - Framework CSS Utility-First. Flexibilidade com extrema otimização no build.
-- **[Shadcn UI](https://ui.shadcn.com/)** - Uma coleção de componentes Radix projetada para total acessibilidade e beleza. O código do componente passa a fazer parte do seu projeto.
-- **[React Hook Form](https://react-hook-form.com/)** - Gerenciador de estados de formulário altamente performático.
-- **[Zod](https://zod.dev/)** - Declaração de Schema com integração nativa no Hook Form via `@hookform/resolvers`.
-- **[TanStack Query](https://tanstack.com/query/latest)** - Lida de forma majestosa com requisições, retentativas e stale data cache.
-- **[Zustand](https://zustand-demo.pmnd.rs/)** - Um "urso" pequeno, rápido e flexível para gerenciar o estado global da UI.
-- **[Lucide React](https://lucide.dev/)** - Suíte de ícones open-source e customizáveis.
-
----
-
-## 📦 Pré-requisitos
-
-Certifique-se de que sua máquina atende aos requisitos básicos:
-
-- **[Node.js](https://nodejs.org/)** (v20+)
-- **[pnpm](https://pnpm.io/)** (O projeto utiliza estritamente o `pnpm` para a resolução e cache de dependências)
-- **Backend rodando** - O Backend na porta 3001 deve estar operante para prover as informações.
+| Pacote             | Versão | Função                                                  |
+| ------------------ | ------ | ------------------------------------------------------- |
+| Next.js            | 16.x   | Framework React com App Router (SSR/SSG)                |
+| React              | 19.x   | Biblioteca de UI                                        |
+| TypeScript         | 5.x    | Tipagem estática                                        |
+| TailwindCSS        | 4.x    | Estilização utilitária com design tokens OKLCH          |
+| Shadcn UI          | —      | Componentes acessíveis baseados em Radix UI             |
+| Framer Motion      | 12.x   | Animações declarativas                                  |
+| Zustand            | 5.x    | Estado global (sessão do usuário)                       |
+| TanStack Query     | 5.x    | Cache, sincronização e invalidação de dados da API      |
+| Axios              | 1.x    | Cliente HTTP com interceptors de JWT                    |
+| React Hook Form    | 7.x    | Gerenciamento de formulários sem re-renders             |
+| Zod                | 3.x    | Validação de schemas integrada ao React Hook Form       |
+| Sonner             | 2.x    | Notificações toast                                      |
 
 ---
 
-## ⚙️ Instalação e Configuração
+## Pré-requisitos
 
-### 1. Instale as Dependências
+- Node.js 20 ou superior
+- pnpm 9 ou superior
+- Backend rodando em `http://localhost:3001`
 
-Na raiz da pasta do frontend, execute:
+---
+
+## Instalação
 
 ```bash
 cd frontend
 pnpm install
-```
-
-### 2. Configure as Variáveis de Ambiente (`.env.local`)
-
-Crie o arquivo contendo os links públicos de comunicação entre o Front e o Back, além do link principal da aplicação.
-
-```bash
 cp .env.example .env.local
 ```
 
-Abra o arquivo `.env.local` e configure:
+Configure o `.env.local`:
 
 ```env
-# Exemplo de configuração do frontend
-
-# URL da API local ou em Produção
-NEXT_PUBLIC_API_URL="your Key"
-
-# URL Front end
-NEXT_PUBLIC_SITE_URL="your Key"
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
-> **Nota de Segurança**: No Next.js, as chaves não precedidas por `NEXT_PUBLIC_` só estarão disponíveis para o Server Component. O prefixo expõe a URL para o cliente (navegador).
 
 ---
 
-## 🎮 Como Rodar o Projeto
-
-### Modo de Desenvolvimento
+## Rodando
 
 ```bash
+# Desenvolvimento (porta 3000 com hot-reload)
 pnpm dev
-```
-O servidor de desenvolvimento do Next.js iniciará no endereço `http://localhost:3000`. Acesse e desenvolva com Hot Reload ativado nativamente.
 
-### Modo de Produção
-
-O Next.js exige uma etapa de build severa que gera páginas estáticas sempre que possível, tornando o App super veloz.
-
-```bash
-# 1. Faz a compilação de toda a aplicação (Assets, Server Actions, Tipagens)
-pnpm build
-
-# 2. Inicia o servidor Node otimizado em porta local
-pnpm start
+# Produção
+pnpm build && pnpm start
 ```
 
 ---
 
-## 📁 Estrutura de Pastas
-
-Organizamos a estrutura para suportar a escala do produto e facilitar a busca:
+## Estrutura de diretórios
 
 ```
 frontend/
-├── src/
-│   ├── app/                # Next.js App Router (Páginas, Layouts, API Routes)
-│   ├── components/         # Componentes React
-│   │   ├── ui/             # Componentes base do Shadcn UI
-│   │   ├── layout/         # Header, Sidebar, Footer...
-│   │   └── forms/          # Componentes relacionados a validações React Hook Form
-│   ├── hooks/              # Custom Hooks globais
-│   ├── lib/                # Configurações do Axios, utilitários globais
-│   ├── validations/        # Arquivos de Schema Zod correspondentes para tipagem
-│   └── store/              # Arquivos Zustand
-├── public/                 # Imagens estáticas e print screens
-├── tailwind.config.ts      # Tokens de design do projeto
-└── package.json            # Dependências geridas pelo pnpm
+├── app/
+│   ├── layout.tsx                  # Layout raiz (fontes, providers)
+│   ├── page.tsx                    # Landing page
+│   ├── (marketing)/                # Grupo de rotas públicas
+│   │   ├── login/page.tsx
+│   │   └── cadastro/page.tsx
+│   ├── (app)/                      # Grupo de rotas protegidas
+│   │   ├── dashboard/page.tsx
+│   │   ├── vagas/
+│   │   │   ├── page.tsx            # Lista de vagas
+│   │   │   └── [id]/page.tsx       # Detalhes e candidatos da vaga
+│   │   ├── candidatos/page.tsx
+│   │   ├── organograma/page.tsx
+│   │   ├── chat/page.tsx
+│   │   ├── configuracoes/page.tsx
+│   │   └── layout.tsx              # Shell com sidebar e header
+│   └── teste/[token]/              # Portal público do candidato
+│       ├── page.tsx                # Boas-vindas e dados pessoais
+│       ├── disc/page.tsx           # Teste DISC
+│       ├── eneagrama/page.tsx      # Teste Eneagrama
+│       ├── personalidades/page.tsx # Teste 16 Personalidades
+│       └── concluido/page.tsx      # Confirmação de envio
+├── components/
+│   ├── ui/                         # Primitivos Shadcn UI
+│   ├── layout/                     # Sidebar, Header, Shell
+│   ├── landing/                    # Seções da landing page
+│   ├── forms/                      # Formulários com React Hook Form
+│   ├── vagas/                      # Cards, modais e pipeline de vagas
+│   ├── relatorio/                  # Relatório de match IA
+│   ├── organograma/                # Visualização hierárquica
+│   ├── chat/                       # Interface do chat com IA
+│   ├── testes/                     # UI dos testes psicométricos
+│   └── shared/                     # Componentes genéricos reutilizáveis
+├── services/                       # Clientes Axios por domínio (auth, vagas, candidatos...)
+├── store/
+│   └── auth.store.ts               # Sessão do usuário (Zustand)
+├── hooks/                          # Custom hooks (useAuth, useDebounce, etc.)
+├── lib/
+│   ├── api.ts                      # Instância Axios com interceptor JWT
+│   ├── utils.ts                    # Utilitários (cn, formatters)
+│   └── tokens.ts                   # Leitura/escrita de tokens no localStorage
+├── types/
+│   └── api.ts                      # Tipos TypeScript dos responses da API
+└── public/
+    └── rh-saas-prints/             # Capturas de tela do produto
 ```
 
 ---
 
-## 🛠️ Scripts Padrões (Package.json)
+## Rotas da aplicação
 
-Dentro do diretório `/frontend`, utilize o **pnpm** para os seguintes comandos vitais:
-
-| Comando | Execução |
-|---------|----------|
-| `pnpm dev` | Abre o FrontEnd em ambiente de desenvolvimento (localhost:3000). |
-| `pnpm build` | Gera versão otimizada da UI (cria o `.next`). |
-| `pnpm start` | Entrega ao browser os arquivos do build (emulação de produção). |
-| `pnpm lint` | Checa problemas de sintaxe no código segundo o ESLint em todo o React. |
+| Rota                     | Acesso    | Descrição                                |
+| ------------------------ | --------- | ---------------------------------------- |
+| `/`                      | Público   | Landing page                             |
+| `/login`                 | Público   | Autenticação de recrutadores             |
+| `/cadastro`              | Público   | Registro de nova empresa                 |
+| `/dashboard`             | Protegido | Visão geral e métricas                   |
+| `/vagas`                 | Protegido | Gestão de vagas                          |
+| `/vagas/[id]`            | Protegido | Candidatos e análise de uma vaga         |
+| `/candidatos`            | Protegido | Pipeline completo de candidatos          |
+| `/organograma`           | Protegido | Hierarquia da empresa                    |
+| `/chat`                  | Protegido | Chat interno com IA                      |
+| `/configuracoes`         | Protegido | Dados da empresa e preferências          |
+| `/teste/[token]`         | Público   | Portal do candidato (via token de vaga)  |
 
 ---
 
-## 👨💻 Autor
+## Autenticação
 
-**Carlos Paula**
+O frontend usa JWT armazenado no `localStorage`. O Axios intercepta automaticamente todas as requisições e injeta o header `Authorization: Bearer <token>`. Rotas protegidas verificam a sessão via Zustand (`useAuth`); usuários não autenticados são redirecionados para `/login`.
 
 ---
 
-**Versão**: 1.0.0  
-**Stack**: Full TypeScript (Next.js)
+## Design system
+
+O projeto usa um sistema de tokens baseado em cores OKLCH definidas em `app/globals.css`. As cores principais:
+
+| Token       | Valor            | Uso                         |
+| ----------- | ---------------- | --------------------------- |
+| `primary`   | Verde neon `#C4FF57` | CTAs, destaques, scores |
+| `secondary` | Kraft `#D6B48B`  | Elementos secundários       |
+| `accent`    | Azul-cinza       | Indicadores, badges         |
+| `background`| Off-white        | Fundo da aplicação          |
+| `foreground`| Carvão `#4A5452` | Texto principal             |
+
+Tipografia: **Montserrat** (display e corpo).
+
+---
+
+## Variáveis de ambiente
+
+| Variável              | Obrigatória | Descrição               |
+| --------------------- | ----------- | ----------------------- |
+| `NEXT_PUBLIC_API_URL` | Sim         | URL base da API Fastify |
+
+---
+
+## Scripts
+
+| Comando      | Descrição                                     |
+| ------------ | --------------------------------------------- |
+| `pnpm dev`   | Servidor de desenvolvimento (porta 3000)      |
+| `pnpm build` | Build otimizado para produção                 |
+| `pnpm start` | Serve o build de produção                     |
+| `pnpm lint`  | Verifica o código com ESLint + TypeScript     |
+
+---
+
+**Versão:** 1.0.0
